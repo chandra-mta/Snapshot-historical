@@ -1,0 +1,64 @@
+<HTML><HEAD><TITLE>Chandra Snapshot Help</TITLE></HEAD>
+<BODY BGCOLOR="#000000" TEXT="#EEEEEE" LINK="#DDDDDD" ALINK="#DDDDDD" VLINK="#DD
+DDDD">
+<pre>
+<H1>CHANDRA SNAPSHOT</H1>
+
+The Chandra Snapshot provides a quick look of critical 
+spacecraft components in realtime.
+
+<hr>
+Access
+There are Primary and Backup versions of the Snapshot.
+** Refer to <a href="http://cxc.harvard.edu/mta/sot.html">SOT Home</a> for updated links.
+
+Additionally, the first generation snapshot exists for reference at:
+<a href="http://cxc.harvard.edu/cgi-gen/mta/snap.cgi">
+http://cxc.harvard.edu/cgi-gen/mta/snap.cgi</a>
+
+There are also text-only copies of all three versions:
+/pool14/chandra/chandra1.snapshot - primary
+/pool14/chandra/chandra2.snapshot - backup
+/pool14/chandra/chandra.snapshot  - first generation
+
+<hr>
+Sections (top to bottom)
+- Current (as of last contact if LOS) time, Radiation Environment, Altitude
+   f_ace: past 2-hour ACE fluence
+   F_CRM: CRM orbital fluence on ACIS
+
+- Current (as of last contact if LOS) spacecraft state
+
+- browser buttons for access to last ~3 days' snapshots
+
+- Current data - up-to-the-minute altitude and Radiation environment
+
+<hr>
+Color Scheme (not applicable for first generation snapshot)
+Some state and limit checking is performed and indicated as follows:
+- <font color=white>white</font> = unchecked
+- <font color=#33CC00>green</font> = within limits/matches expected state
+- <font color=#FFFF00>yellow</font> = warning limit/suspicious state
+- <font color=#FF0000>red</font> = limit violation/does not match expected state
+- <font color=#00EECC>blue</font> = unchecked (for quantities that are usually checked,
+   for instance RA, Dec, and Roll may not be checked in NMAN mode,
+   and Ephin rates are not checked in the Rad zones)
+- <font color=#996677>purple</font> = stale data (value is more than 15 minutes old, usually means
+   quantity is unavailable in current telemetry format)
+
+<hr>
+Violation Notification
+E-mail alerts/pages will be generated and distributed as follows:
+</pre>
+<table border=0>
+<tr><th>Condition   <th>Recipients      </tr>
+<tr><td>SCS107 DISA <td>sot_red_alert </tr>
+<tr><td>FMT5        <td>sot_red_alert   </tr>
+</table>
+<pre>
+
+<hr>
+Problems or questions? Contact <u>bspitzbart at cfa.harvard.edu</u>
+</pre>
+</body>
+</html>

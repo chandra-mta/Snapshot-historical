@@ -1,0 +1,56 @@
+# parameter file for snaps3.cgi
+# Tab delimited columns:
+#    Test_mnemonic	Next_mnemonic	comparison_mode	Args
+#
+#  Four comparison modes available:
+#	1 - consult chex	Args: state_var  tolerance
+#	  	direct use of match method
+#
+#	2 - use static limits	
+#		Args: lower_yellow  upper_yellow  lower_red  upper_red
+#
+#	3 - use static, alphabetic constant	Args: constant_value
+#
+#	4 - use a custom function	Args: function_name
+#		function should be written in snaps[X].cgi
+#		passed snapshot text and test value
+#		returns color
+#######################################################################
+3TSCPOS		1	simtsc		5
+3FAPOS		1	simfa		5
+COBSRQID	1	obsid		0.001
+RA		1	ra		0.02
+DEC		1	dec		0.02
+ROLL		1	roll		0.02
+AODITHEN	1	dither		MATCH
+KP		2	-	5.0	-	6.0
+FLUXACE		2	-	30000	-	50000
+#FLUACE		2	-	600000000	-	1000000000
+CRM		2	-	1000000000	-	3000000000
+AIRU1G1I	2	-	150	-	200
+AIRU1G2I	2	-	150	-	200
+AIRU2G1I	2	-	120	-	650
+AIRU2G2I	2	-	120	-	650
+TEPHIN          2       0       98      0       102
+CTXAPWR		2	-1	36.82	-1	37.0
+CTXBPWR		2	-1	36.82	-1	37.0
+CTXAV		2	-1	3.6	-1	3.7
+CTXBV		2	-1	3.6	-1	3.7
+AOCONLAW	3	NPNT
+AOCPESTL	3	NORM
+4OBAVTMF	3	NFLT
+4OBTOORF	3	NFLT
+COSCS128S	4	scs128
+COSCS129S	4	scs129
+COSCS130S	4	scs130
+COSCS107S	4	scs107
+CORADMEN	4	radmon
+AOPCADMD	4	pcadmode
+4HPOSARO	4	hetg
+4LPOSBRO	4	letg
+E1300		4	e1300
+P4GM		4	p4gm
+P41GM		4	p41gm
+CCSDSTMF	4	fmt
+ACAFCT		4	imfunc
+AOFSTAR		4	aofstar
