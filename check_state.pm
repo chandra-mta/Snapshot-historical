@@ -1032,11 +1032,11 @@ sub send_sim_unsafe_alert {
       
     print FILE "\nSnapshot:\n";
     print FILE "http://cxc.harvard.edu/cgi-gen/mta/Snap/snap.cgi\n"; #debug
-    print FILE "This message sent to brad swolk\n"; #debug
+    print FILE "This message sent to sot_yellow_alert\n"; #debug
     close FILE;
 
-    open MAIL, "|mailx -s SIM_UNSAFE! brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    #open MAIL, "|mailx -s SIM_UNSAFE! sot_red_alert\@head.cfa.harvard.edu operators";
+    #open MAIL, "|mailx -s SIM_UNSAFE! brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s SIM_UNSAFE! sot_yellow_alert\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
@@ -1059,12 +1059,12 @@ sub send_hrc_shld_alert {
       
     print FILE "\nSnapshot:\n";
     print FILE "http://cxc.harvard.edu/cgi-gen/mta/Snap/snap.cgi\n"; #debug
-    print FILE "This message sent to brad swolk\n"; #debug
+    print FILE "This message sent to sot_lead\n"; #debug
     close FILE;
 
-    open MAIL, "|mailx -s 'HRC SHIELD' brad\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s 'HRC SHIELD' brad\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s 'HRC SHIELD' brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    #open MAIL, "|mailx -s 'HRC SHIELD' sot_red_alert\@head.cfa.harvard.edu operators";
+    open MAIL, "|mailx -s 'HRC SHIELD' sot_lead\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
@@ -1275,12 +1275,11 @@ sub send_ctxpwr_alert {
     open FILE, ">$afile";
     print FILE "Chandra realtime telemetry shows Transmitter $_[1] Power = $_[0] DBM at $obt UT\n";
     print FILE "Limit = 36.75 DBM\n\n";
-    print FILE "This message sent to brad\n"; #debug
+    print FILE "This message sent to sot_yellow_alert\n"; #debug
     close FILE;
 
-    open MAIL, "|mailx -s CTXPWR brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    #open MAIL, "|mailx -s CTXPWR brad\@head.cfa.harvard.edu";
-    #open MAIL, "|mailx -s CTXPWR sot_yellow_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s CTXPWR brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s CTXPWR sot_yellow_alert\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
@@ -1301,11 +1300,11 @@ sub send_ctxv_alert {
     open FILE, ">$afile";
     print FILE "Chandra realtime telemetry shows Transmitter $_[1] Voltage = $_[0] V at $obt UT\n";
     print FILE "Limit = 3.60 V\n\n";
-    print FILE "This message sent to brad\n"; #debug
+    print FILE "This message sent to sot_yellow_alert\n"; #debug
     close FILE;
 
-    open MAIL, "|mailx -s CTXV brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    #open MAIL, "|mailx -s CTXV brad\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s CTXV brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s CTXV sot_yellow_alert\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
@@ -1354,8 +1353,8 @@ sub send_pline03t_alert {
     print FILE "This message sent to sot_yellow_alert\n"; #debug
     close FILE;
 
-    open MAIL, "|mailx -s PLINE03T brad\@head.cfa.harvard.edu";
-    #open MAIL, "|mailx -s PLINE03T sot_yellow_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s PLINE03T brad\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s PLINE03T sot_yellow_alert\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
@@ -1379,8 +1378,8 @@ sub send_pline04t_alert {
     print FILE "This message sent to sot_yellow_alert\n"; #debug
     close FILE;
 
-    open MAIL, "|mailx -s PLINE04T brad\@head.cfa.harvard.edu";
-    #open MAIL, "|mailx -s PLINE04T sot_yellow_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s PLINE04T brad\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s PLINE04T sot_yellow_alert\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
