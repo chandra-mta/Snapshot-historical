@@ -746,6 +746,55 @@ sub hkp27v {
   return $color;
 }
 
+sub shldart {
+  my $val = $_[0];
+  my $afile = "/home/mta/Snap/.hrcshldalert";
+  my $tfile = "/home/mta/Snap/.hrcshldwait";
+  $color = $YLW;
+  if ($val > 255) {
+    $color = $BLU;
+  }
+  if ($val < 245) {
+    $color = $GRN;
+    if (-s $afile) {
+      my $tnum = 3;  # but, wait a little while before deleting lock
+      if (-s $tfile) {
+        open (TF, "<$tfile");
+        $tnum = <TF>;
+        close TF;
+      }
+      $tnum--;
+      if ($tnum == 0) {
+        unlink $afile;
+      }
+      if ($tnum > 0) {
+        open (TF, ">$tfile");
+        print TF $tnum;
+        close TF;
+      }
+    }
+  }
+  if ($val > 245 && $val < 256 ) {
+    $color = $YLW;
+    my $tnum = 0;  # but, wait a little while before waking people up
+    if (-s $tfile) {
+      open (TF, "<$tfile");
+      $tnum = <TF>;
+      close TF;
+    }
+    $tnum++;
+    if ($tnum == 3) {
+      send_hrc_shld_alert($val);
+    }
+    if ($tnum <= 3) {
+      open (TF, ">$tfile");
+      print TF $tnum;
+      close TF;
+    }
+  }
+  return $color;
+}
+
 sub send_107_alert {
   # send e-mail alert if SCS107 DISA
   my $obstime = ${$hash{COSCS107S}}[0];
@@ -895,6 +944,34 @@ sub send_sim_unsafe_alert {
 
     open MAIL, "|mailx -s SIM_UNSAFE! brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s SIM_UNSAFE! sot_red_alert\@head.cfa.harvard.edu operators";
+    open FILE, $afile;
+    while (<FILE>) {
+      print MAIL $_;
+    }
+    close FILE;
+    close MAIL;
+  }
+}
+
+sub send_hrc_shld_alert {
+  my $obstime = ${$hash{"2SHLDART"}}[0];
+  if (! time_curr($obstime)) {
+    return;
+  }
+  my $afile = "/home/mta/Snap/.hrc_shld_alert";
+  if (-s $afile) {
+  } else {
+    open FILE, ">$afile";
+    printf FILE "Chandra realtime telemetry shows HRC SHIELD RATE of %3d at $obt UT\n",$_[0];
+      
+    print FILE "\nSnapshot:\n";
+    print FILE "http://cxc.harvard.edu/cgi-gen/mta/Snap/snap.cgi\n"; #debug
+    print FILE "This message sent to brad swolk\n"; #debug
+    close FILE;
+
+    open MAIL, "|mailx -s 'HRC SHIELD' brad\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s 'HRC SHIELD' brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s 'HRC SHIELD' sot_red_alert\@head.cfa.harvard.edu operators";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
