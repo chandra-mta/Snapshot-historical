@@ -1,0 +1,8 @@
+Snapshot creates to Chandra Snapshot at:
+http://cxc.harvard.edu/mta/Snapshot/snap.cgi?action=Latest
+
+This package contains all the code to run acorn on realtime
+data streams and to produce the output in html,wml, and text formats.
+Along the way some limits are checked and indicated in color
+on the webpage.  Alerts are issued for SCS107 and others.
+

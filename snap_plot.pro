@@ -1,0 +1,4 @@
+snap_plot_iru
+snap_plot_mom
+snap_plot_ctx
+exit

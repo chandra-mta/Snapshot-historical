@@ -9,7 +9,7 @@ FUNCTION NO_AXIS_LABELS, axis, index, value
 return, string(" ")
 end
 
-PRO PLOT_MOM
+PRO SNAP_PLOT_MOM
 
 tmpout="momentum.tmp" ; keep the plotted values here
 tlfiles=findfile('./chandraPCAD*tl')

@@ -9,7 +9,7 @@ FUNCTION NO_AXIS_LABELS, axis, index, value
 return, string(" ")
 end
 
-PRO PLOT_IRU
+PRO SNAP_PLOT_IRU
 
 tmpout="iru_currents.tmp" ; keep the plotted values here
 tlfiles=findfile('./chandraIRU*tl')

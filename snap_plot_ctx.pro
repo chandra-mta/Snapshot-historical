@@ -9,7 +9,7 @@ FUNCTION NO_AXIS_LABELS, axis, index, value
 return, string(" ")
 end
 
-PRO PLOT_CTX
+PRO SNAP_PLOT_CTX
 
 tmpout="ctx.tmp" ; keep the plotted values here
 tlfiles=findfile('./chandraCCDM*tl')
