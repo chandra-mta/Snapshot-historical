@@ -23,7 +23,9 @@ $filesize = 500;
 
 @mta_data = qw(/home/ascds/DS.release/config/mta/data /data/mta2/pallen/acorn-1.3/groups /home/swolk/acorn/groups);
 $ENV{ASCDS_CONFIG_MTA_DATA} = (-e $mta_data[0])? $mta_data[0] : $mta_data[1]; 
-@ipcl = qw(/home/ascds/DS.release/config/tp_template/P008/ /home/ascds/swolk/IPCL/P008 /home/swolk/acorn/ODB);
+# use custom IPCL dir to get uncalibrated SHLDART, DETART, but
+#  everything else calibrated
+@ipcl = qw(/data/mta4/www/Snapshot/P008 /home/ascds/DS.release/config/tp_template/P008/ /home/ascds/swolk/IPCL/P008 /home/swolk/acorn/ODB);
 $ENV{IPCL_DIR} = (-e $ipcl[0])? $ipcl[0] : $ipcl[1];
 #$ENV{LD_LIBRARY_PATH} = '/proj/cm/Release/install.DS6.2.0/lib:$LD_LIBRARY_PATH';
 chdir $work_dir or die "Cannot cd to $work_dir\n";
