@@ -33,6 +33,11 @@ sub get_data {
           foreach (@msids) { 
             $val = shift @vals;
             if ($val ne "") {
+              # save previous HKP27V/I
+              if ($_ eq "5HSE202") {
+                $h{"5HSE202a"} = $h{"5HSE202"};
+                $h{"5EHSE106a"} = $h{"5EHSE106"};
+              } # if ($_ eq "5HSE202") {
               $h{$_} = [$time, $val, "", "white"];
               #print "$_ ${$h{$_}}[0] ${$h{$_}}[1] ${$h{$_}}[2]\n"; #debug
               # different msids may have valid value in different files
