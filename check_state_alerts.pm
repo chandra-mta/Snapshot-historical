@@ -857,14 +857,14 @@ sub send_nsun_alert {
       
     print FILE "\nSnapshot:\n";
     print FILE "http://cxc.harvard.edu/cgi-gen/mta/Snap/snap.cgi\n"; #debug
-    #print FILE "This message sent to sot_yellow_alert\n"; #debug
+    print FILE "This message sent to sot_yellow_alert\n"; #debug
     #print FILE "This message sent to sot_red_alert\n"; #debug
-    print FILE "This message sent to brad swolk\n"; #debug
+    #print FILE "This message sent to brad swolk\n"; #debug
     #print FILE "\n TEST   TEST   TEST   TEST   TEST   TEST   TEST\n"; #debug
     close FILE;
 
-    open MAIL, "|mailx -s NSUN brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    #open MAIL, "|mailx -s NSUN sot_yellow_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s NSUN brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s NSUN sot_yellow_alert\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s NSUN sot_red_alert\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s NSUN sot_red_alert\@head.cfa.harvard.edu operators";
     #open MAIL, "|more"; #debug
