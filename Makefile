@@ -13,6 +13,8 @@ DOC  = ReadMe
 PERLLIB = check_state.pm check_state_alerts.pm check_state_force_alert.pm check_state_noalerts.pm comps.pm snap.pm snap_format.pm
 WWW  = snapshot_hlp.html
 
+#sed -e "s/.\/snaps2.par/\/home\/mta\/Snap\/snaps2.par/" check_state.pm > check_state_alerts.pm
+
 install:
 ifdef BIN
 	rsync --times --cvs-exclude $(BIN) $(INSTALL_BIN)/
@@ -42,10 +44,10 @@ ifdef WWW
 	rsync --times --cvs-exclude $(WWW) $(INSTALL_WWW)/
 endif
 
-rsync --times --cvs-exclude $(BIN) /data/mta4/www/Snapshot/
-rsync --times --cvs-exclude $(DATA) /data/mta4/www/Snapshot/
-rsync --times --cvs-exclude $(DOC) /data/mta4/www/Snapshot/
-rsync --times --cvs-exclude $(IDL_LIB) /data/mta4/www/Snapshot/
-rsync --times --cvs-exclude $(CGI_BIN) /data/mta4/www/Snapshot/
-rsync --times --cvs-exclude $(PERLLIB) /data/mta4/www/Snapshot/
-rsync --times --cvs-exclude $(WWW) /data/mta4/www/Snapshot/
+#rsync --times --cvs-exclude $(BIN) /data/mta4/www/Snapshot/
+#rsync --times --cvs-exclude $(DATA) /data/mta4/www/Snapshot/
+#rsync --times --cvs-exclude $(DOC) /data/mta4/www/Snapshot/
+#rsync --times --cvs-exclude $(IDL_LIB) /data/mta4/www/Snapshot/
+#rsync --times --cvs-exclude $(CGI_BIN) /data/mta4/www/Snapshot/
+#rsync --times --cvs-exclude $(PERLLIB) /data/mta4/www/Snapshot/
+#rsync --times --cvs-exclude $(WWW) /data/mta4/www/Snapshot/

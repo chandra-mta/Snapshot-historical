@@ -5,6 +5,9 @@ sub check_state {
     #use lib '//Snap';
     use Chex;
 
+    `date >> /home/mta/Snap/hostlog`;
+    `hostname >> /home/mta/Snap/hostlog`;
+
     %hash = @_;
     # Create the Chandra Expected state object
     #$chex_file = "/proj/sot/ska/dev/starcheck/TEST//pred_state.rdb";
@@ -111,7 +114,9 @@ sub check_state {
         $funcall =~ s/\s+$//;
         #print "$funcall $val\n";  # DEBUG
         $stat=${$hash{"5EHSE106"}}[1];
-        @args=($val,$stat);
+        $prev=${$hash{"5HSE202a"}}[1];
+        $pstat=${$hash{"5EHSE106a"}}[1];
+        @args=($val,$stat,$prev,$pstat,$chk[3],$chk[4]);
         $color = &$funcall(@args);
       }
 
@@ -348,7 +353,7 @@ sub scs107 {
           close TF;
         }
         $tnum++;
-        if ($tnum == 2) {
+        if ($tnum == 3) {
           send_107_alert($val);
         }
         if ($tnum <= 2) {
@@ -654,14 +659,13 @@ sub ctxbv {
 }
 
 sub hkp27v {
-  my $val = @_[0];
-  my $stat = @_[1];
+  my ($val,$stat,$prev,$pstat,$lim,$abs_diff)=@_;
   my $afile = "/home/mta/Snap/.hkp27valert";
   my $tfile = "/home/mta/Snap/.hkp27vwait";
-  print " $val $stat \n";
+  #print "HKP27V  $val $stat $lim\n";
   $color = $WHT;
   if ($stat % 2 == 1) {
-    if ($val >= 26.00) {
+    if ($val >= $lim) {
       $color = $GRN;
       if (-s $afile) {
         my $tnum = 3;  # but, wait a little while before deleting lock
@@ -681,7 +685,7 @@ sub hkp27v {
         }
       }
     }
-    if ($val < 26.00) {
+    if ($val < $lim && abs($val-$prev) lt $abs_diff && abs($val-$prev) gt 1) {
       #$color = $RED; # leave white for now
       $color = $WHT;
       my $tnum = 0;  # but, wait a little while before waking people up
@@ -691,10 +695,10 @@ sub hkp27v {
         close TF;
       }
       $tnum++;
-      if ($tnum == 3) {
+      if ($tnum == 5) {
         send_hkp27v_alert($val);
       }
-      if ($tnum <= 3) {
+      if ($tnum <= 5) {
         open (TF, ">$tfile");
         print TF $tnum;
         close TF;
@@ -1016,6 +1020,7 @@ sub send_ctxv_alert {
 
 sub send_hkp27v_alert {
   my $obstime = ${$hash{"5HSE202"}}[0];
+  #print "send_hkp27v $obstime\n";
   if (! time_curr($obstime)) {
     return;
   }
@@ -1028,8 +1033,8 @@ sub send_hkp27v_alert {
     print FILE "This message sent to brad swolk\n"; #debug
     close FILE;
 
-    #open MAIL, "|mailx -s HKP27V brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s HKP27V brad\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s HKP27V brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s HKP27V brad\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;

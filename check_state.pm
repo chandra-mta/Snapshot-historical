@@ -5,6 +5,9 @@ sub check_state {
     #use lib '//Snap';
     use Chex;
 
+    `date >> /home/mta/Snap/hostlog`;
+    `hostname >> /home/mta/Snap/hostlog`;
+
     %hash = @_;
     # Create the Chandra Expected state object
     #$chex_file = "/proj/sot/ska/dev/starcheck/TEST//pred_state.rdb";
