@@ -748,7 +748,7 @@ sub hkp27v {
 
 sub shldart {
   my $val = $_[0];
-  my $afile = "/home/mta/Snap/.hrcshldalert";
+  my $afile = "/home/mta/Snap/.hrc_shld_alert";
   my $tfile = "/home/mta/Snap/.hrcshldwait";
   $color = $YLW;
   if ($val > 255) {

@@ -123,6 +123,9 @@ sub do_comps {
   $h{AACCCDPT}[1] = (${$h{AACCCDPT}}[1] - 32)*5/9;
   $h{AOACINTT}[1] = ${$h{AOACINTT}}[1]/1000;
 
+  # if shld hv is off, make rate 0, acorn comes out NaN
+  if (${$h{"2S2HVST"}}[1] == 0) { ${$h{"2SHLDART"}}[1]=0; }
+
   $utc = `date -u +"%Y:%j:%T (%b%e)"`;
   chomp $utc;
   $h{UTC} = [time_now(), $utc, "", "white"];

@@ -748,7 +748,7 @@ sub hkp27v {
 
 sub shldart {
   my $val = $_[0];
-  my $afile = "/home/mta/Snap/.hrcshldalert";
+  my $afile = "/home/mta/Snap/.hrc_shld_alert";
   my $tfile = "/home/mta/Snap/.hrcshldwait";
   $color = $YLW;
   if ($val > 255) {
@@ -774,7 +774,7 @@ sub shldart {
       }
     }
   }
-  if ($val > 245 && $val < 256 ) {
+  if ($val > 245 && ${$hash{CORADMEN}}[1] eq 'ENAB') {
     $color = $YLW;
     my $tnum = 0;  # but, wait a little while before waking people up
     if (-s $tfile) {
