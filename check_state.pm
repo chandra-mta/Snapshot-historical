@@ -662,8 +662,6 @@ sub hkp27v {
   my $pstat = @_[3];
   my $afile = "/home/mta/Snap/.hkp27valert";
   my $tfile = "/home/mta/Snap/.hkp27vwait";
-  $k=abs($val-$prev);
-  print "HKP27V $k\n";
   #print "HKP27V  $val $stat \n";
   $color = $WHT;
   if ($stat % 2 == 1) {
