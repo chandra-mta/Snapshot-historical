@@ -687,7 +687,7 @@ sub hkp27v {
         }
       }
     }
-    if ($val < 26.00 && abs($val-$prev) lt 7) {
+    if ($val < 26.00 && abs($val-$prev) lt 7 && abs($val-$prev) gt 1) {
       #$color = $RED; # leave white for now
       $color = $WHT;
       my $tnum = 0;  # but, wait a little while before waking people up
