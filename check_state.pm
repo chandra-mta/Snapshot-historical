@@ -1064,7 +1064,7 @@ sub send_hrc_shld_alert {
 
     #open MAIL, "|mailx -s 'HRC SHIELD' brad\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s 'HRC SHIELD' brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s 'HRC SHIELD' sot_lead\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s 'HRC SHIELD' sot_lead\@head.cfa.harvard.edu brad";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
