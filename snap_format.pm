@@ -206,14 +206,14 @@ $s .= sprintf "<font color=%s>ACA Int Time %6.3f                        </font>"
 $s .= sprintf "<font color=%s>Roll Rate  %7.2f      </font>",
                ${$h{AORATE1}}[3], ${$h{AORATE1}}[1];
 $s .= sprintf "<font color=%s>EVT RATE %4d</font>\n",
-               ${$h{"2SHLDART"}}[3], ${$h{"2SHLDART"}}[1];
+               ${$h{"2DETART"}}[3], ${$h{"2DETART"}}[1];
 
 $s .= sprintf "<font color=%s>AOACSTAT       %4s    </font>",
                ${$h{AOACSTAT}}[3], ${$h{AOACSTAT}}[1];
 $s .= sprintf "<font color=%s>FSS SunBeta %4s                            </font>",
                ${$h{AOBETSUN}}[3], ${$h{AOBETSUN}}[1];
 $s .= sprintf "<font color=%s>SHLD RATE%4d</font>\n",
-               ${$h{"2DETART"}}[3], ${$h{"2DETART"}}[1];
+               ${$h{"2SHLDART"}}[3], ${$h{"2SHLDART"}}[1];
 
 $s .= sprintf "                       ";
 $s .= sprintf "<font color=%s>FSS Alfa  %6.2f    </font>",
