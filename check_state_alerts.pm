@@ -751,10 +751,10 @@ sub shldart {
   my $afile = "/home/mta/Snap/.hrc_shld_alert";
   my $tfile = "/home/mta/Snap/.hrcshldwait";
   $color = $YLW;
-  if ($val > 255) {
+  if ($val > 255 || ${$hash{CORADMEN}}[1] eq 'ENAB') {
     $color = $BLU;
   }
-  if ($val < 245) {
+  if ($val < 245 && ${$hash{CORADMEN}}[1] eq 'ENAB') {
     $color = $GRN;
     if (-s $afile) {
       my $tnum = 3;  # but, wait a little while before deleting lock
