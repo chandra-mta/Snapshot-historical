@@ -113,7 +113,7 @@ sub check_state {
         $stat=${$hash{"5EHSE106"}}[1];
         $prev=${$hash{"5HSE202a"}}[1];
         $pstat=${$hash{"5EHSE106a"}}[1];
-        @args=($val,$stat,$prev,$pstat);
+        @args=($val,$stat,$prev,$pstat,$chk[3],$chk[4]);
         $color = &$funcall(@args);
       }
 
@@ -656,16 +656,13 @@ sub ctxbv {
 }
 
 sub hkp27v {
-  my $val = @_[0];
-  my $stat = @_[1];
-  my $prev = @_[2];
-  my $pstat = @_[3];
+  my ($val,$stat,$prev,$pstat,$lim,$abs_diff)=@_;
   my $afile = "/home/mta/Snap/.hkp27valert";
   my $tfile = "/home/mta/Snap/.hkp27vwait";
-  #print "HKP27V  $val $stat \n";
+  print "HKP27V  $val $stat $lim\n";
   $color = $WHT;
   if ($stat % 2 == 1) {
-    if ($val >= 26.00) {
+    if ($val >= $lim) {
       $color = $GRN;
       if (-s $afile) {
         my $tnum = 3;  # but, wait a little while before deleting lock
@@ -685,7 +682,7 @@ sub hkp27v {
         }
       }
     }
-    if ($val < 26.00 && abs($val-$prev) lt 7 && abs($val-$prev) gt 1) {
+    if ($val < $lim && abs($val-$prev) lt $abs_diff && abs($val-$prev) gt 1) {
       #$color = $RED; # leave white for now
       $color = $WHT;
       my $tnum = 0;  # but, wait a little while before waking people up
