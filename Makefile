@@ -6,7 +6,7 @@ TASK = Snapshot
 include /data/mta4/MTA/include/Makefile.MTA
 
 BIN  = force_scs107_alert.pl run-acorn.pl run-multimon.pl snarcl.pl tlogr.pl
-IDL_BIN  = snap_plot.pro snap_plot_ctx.pro snap_plot_iru.pro snap_plot_mom.pro
+IDL_LIB  = snap_plot.pro snap_plot_ctx.pro snap_plot_iru.pro snap_plot_mom.pro
 CGI_BIN  = snap.cgi
 DATA = chandra-msids.list snaps2.par snaps2_alerts.par snaps2_noalerts.par
 DOC  = ReadMe
@@ -25,9 +25,9 @@ ifdef DOC
 	mkdir -p $(INSTALL_DOC)
 	rsync --times --cvs-exclude $(DOC) $(INSTALL_DOC)/
 endif
-ifdef IDL_BIN
-	mkdir -p $(INSTALL_IDL_BIN)
-	rsync --times --cvs-exclude $(IDL_BIN) $(INSTALL_IDL_BIN)/
+ifdef IDL_LIB
+	mkdir -p $(INSTALL_IDL_LIB)
+	rsync --times --cvs-exclude $(IDL_LIB) $(INSTALL_IDL_LIB)/
 endif
 ifdef CGI_BIN
 	mkdir -p $(INSTALL_CGI_BIN)
