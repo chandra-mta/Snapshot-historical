@@ -124,16 +124,16 @@ sub radmon {
     my $sim = ${$hash{"3TSCPOS"}}[1];
     my $obs = ${$hash{COBSRQID}}[1];
     my $color = $BLU; # Default to blue (not checked or undef)
-    if ($obs > 60000 && $sim < -99000 && $val eq "ENAB") {
+    if ($obs > 55000 && $sim < -99000 && $val eq "ENAB") {
       $color = $RED;
     }
-    if ($obs > 60000 && $sim < -99000 && $val eq "DISA") {
+    if ($obs > 55000 && $sim < -99000 && $val eq "DISA") {
       $color = $GRN;
     }
-    if (($obs < 60000 || $sim > -99000) && $val eq "DISA") {
+    if (($obs < 55000 || $sim > -99000) && $val eq "DISA") {
       $color = $RED;
     }
-    if (($obs < 60000 || $sim > -99000) && $val eq "ENAB") {
+    if (($obs < 55000 || $sim > -99000) && $val eq "ENAB") {
       $color = $GRN;
     }
 
@@ -155,7 +155,8 @@ sub pcadmode {
     #if ($#dec > 0)  {$dec[0] = $UNDEF;}
     #if ($#roll > 0) {$roll[0] = $UNDEF;}
     my $color = $BLU;
-    if ($ra[0] eq $UNDEF || $dec[0] eq $UNDEF || $roll[0] eq $UNDEF) {
+    #if ($ra[0] eq $UNDEF || $dec[0] eq $UNDEF || $roll[0] eq $UNDEF) {
+    if ($ra[0] eq $UNDEF && $dec[0] eq $UNDEF && $roll[0] eq $UNDEF) {
       if ($val eq 'NPNT') {$color = $RED;}
       if ($val eq 'NMAN') {$color = $GRN;}
     } else {
