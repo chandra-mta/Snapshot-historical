@@ -796,98 +796,96 @@ sub shldart {
 }
 
 sub pline03t {
-    my $val = $_[0];
-    my $afile = "/home/mta/Snap/.pline03talert";
-    my $tfile = "/home/mta/Snap/.pline03twait";
-    $color = $BLU;
-    if ($val > 42.5) {
-      $color = $GRN;
-      if (-s $afile) {
-        my $tnum = 3;  # but, wait a little while before deleting lock
-        if (-s $tfile) {
-          open (TF, "<$tfile");
-          $tnum = <TF>;
-          close TF;
-        }
-        $tnum--;
-        if ($tnum == 0) {
-          unlink $afile;
-        }
-        if ($tnum > 0) {
-          open (TF, ">$tfile");
-          print TF $tnum;
-          close TF;
-        }
-      }
-    } # if ($val > 42.5) {
-    if ($val < 42.5) {
-      $color = $YLW;
-      my $tnum = 0;  # but, wait a little while before waking people up
+  my $val = $_[0];
+  my $afile = "/home/mta/Snap/.pline03talert";
+  my $tfile = "/home/mta/Snap/.pline03twait";
+  $color = $BLU;
+  if ($val > 42.5) {
+    $color = $GRN;
+    if (-s $afile) {
+      my $tnum = 3;  # but, wait a little while before deleting lock
       if (-s $tfile) {
         open (TF, "<$tfile");
         $tnum = <TF>;
         close TF;
       }
-      $tnum++;
-      if ($tnum == 3) {
-        send_pline03t_alert($val);
+      $tnum--;
+      if ($tnum == 0) {
+        unlink $afile;
       }
-      if ($tnum <= 1) {
+      if ($tnum > 0) {
         open (TF, ">$tfile");
         print TF $tnum;
         close TF;
       }
-      if ($val < 40.0) {$color=$RED;}
-    } #if ($val < 42.5) {
-  }
+    }
+  } # if ($val > 42.5) {
+  if ($val < 42.5) {
+    $color = $YLW;
+    my $tnum = 0;  # but, wait a little while before waking people up
+    if (-s $tfile) {
+      open (TF, "<$tfile");
+      $tnum = <TF>;
+      close TF;
+    }
+    $tnum++;
+    if ($tnum == 3) {
+      send_pline03t_alert($val);
+    }
+    if ($tnum <= 1) {
+      open (TF, ">$tfile");
+      print TF $tnum;
+      close TF;
+    }
+    if ($val < 40.0) {$color=$RED;}
+  } #if ($val < 42.5) {
   return $color;
 }
 
 sub pline04t {
-    my $val = $_[0];
-    my $afile = "/home/mta/Snap/.pline04talert";
-    my $tfile = "/home/mta/Snap/.pline04twait";
-    $color = $BLU;
-    if ($val > 42.5) {
-      $color = $GRN;
-      if (-s $afile) {
-        my $tnum = 3;  # but, wait a little while before deleting lock
-        if (-s $tfile) {
-          open (TF, "<$tfile");
-          $tnum = <TF>;
-          close TF;
-        }
-        $tnum--;
-        if ($tnum == 0) {
-          unlink $afile;
-        }
-        if ($tnum > 0) {
-          open (TF, ">$tfile");
-          print TF $tnum;
-          close TF;
-        }
-      }
-    } # if ($val > 42.5) {
-    if ($val < 42.5) {
-      $color = $YLW;
-      my $tnum = 0;  # but, wait a little while before waking people up
+  my $val = $_[0];
+  my $afile = "/home/mta/Snap/.pline04talert";
+  my $tfile = "/home/mta/Snap/.pline04twait";
+  $color = $BLU;
+  if ($val > 42.5) {
+    $color = $GRN;
+    if (-s $afile) {
+      my $tnum = 3;  # but, wait a little while before deleting lock
       if (-s $tfile) {
         open (TF, "<$tfile");
         $tnum = <TF>;
         close TF;
       }
-      $tnum++;
-      if ($tnum == 3) {
-        send_pline04t_alert($val);
+      $tnum--;
+      if ($tnum == 0) {
+        unlink $afile;
       }
-      if ($tnum <= 1) {
+      if ($tnum > 0) {
         open (TF, ">$tfile");
         print TF $tnum;
         close TF;
       }
-      if ($val < 40.0) {$color=$RED;}
-    } #if ($val < 42.5) {
-  }
+    }
+  } # if ($val > 42.5) {
+  if ($val < 42.5) {
+    $color = $YLW;
+    my $tnum = 0;  # but, wait a little while before waking people up
+    if (-s $tfile) {
+      open (TF, "<$tfile");
+      $tnum = <TF>;
+      close TF;
+    }
+    $tnum++;
+    if ($tnum == 3) {
+      send_pline04t_alert($val);
+    }
+    if ($tnum <= 1) {
+      open (TF, ">$tfile");
+      print TF $tnum;
+      close TF;
+    }
+    if ($val < 40.0) {$color=$RED;}
+  } #if ($val < 42.5) {
   return $color;
 }
 
