@@ -42,10 +42,10 @@ ifdef WWW
 	rsync --times --cvs-exclude $(WWW) $(INSTALL_WWW)/
 endif
 
-rsync --times --cvs-exclude $(BIN) /data/mta4/www/Snapshot
-rsync --times --cvs-exclude $(DATA) /data/mta4/www/Snapshot
-rsync --times --cvs-exclude $(DOC) /data/mta4/www/Snapshot
-rsync --times --cvs-exclude $(IDL_LIB) /data/mta4/www/Snapshot
-rsync --times --cvs-exclude $(CGI_BIN) /data/mta4/www/Snapshot
-rsync --times --cvs-exclude $(PERLLIB) /data/mta4/www/Snapshot
-rsync --times --cvs-exclude $(WWW) /data/mta4/www/Snapshot
+rsync --times --cvs-exclude $(BIN) /data/mta4/www/Snapshot/
+rsync --times --cvs-exclude $(DATA) /data/mta4/www/Snapshot/
+rsync --times --cvs-exclude $(DOC) /data/mta4/www/Snapshot/
+rsync --times --cvs-exclude $(IDL_LIB) /data/mta4/www/Snapshot/
+rsync --times --cvs-exclude $(CGI_BIN) /data/mta4/www/Snapshot/
+rsync --times --cvs-exclude $(PERLLIB) /data/mta4/www/Snapshot/
+rsync --times --cvs-exclude $(WWW) /data/mta4/www/Snapshot/
