@@ -177,7 +177,7 @@ sub pcadmode {
     my $color = $BLU;
     #if ($ra[0] eq $UNDEF || $dec[0] eq $UNDEF || $roll[0] eq $UNDEF) {
     if ($ra[0] eq $UNDEF && $dec[0] eq $UNDEF && $roll[0] eq $UNDEF) {
-      if ($val eq 'NPNT') {$color = $RED;}
+      if ($val eq 'NPNT') {$color = $YLW;}
       if ($val eq 'NMAN') {$color = $GRN;}
     } else {
       if ($val eq 'NPNT') {$color = $GRN;}
