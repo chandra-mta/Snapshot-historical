@@ -75,25 +75,24 @@ $s .= sprintf "Yaw Mom.   %8.3f   Cmd Rej A%9d   EPH B-Leak%8.4f   P41GM%10.1f\n
 
 $s .= sprintf "%43sEPH temp %9.2f\n", " ",${$h{TEPHIN}}[1];
 
-$s .= sprintf "Gyro 1 Curr 1 %6.2f  Roll Bias  %7.4f", ${$h{AIRU1G1I}}[1], ${$h{AOGBIAS1}}[1]*206264.98;
+$s .= sprintf "Gyro 2 Curr 1 %6.2f  Roll Bias  %7.4f", ${$h{AIRU2G1I}}[1], ${$h{AOGBIAS1}}[1]*206264.98;
 #$s .= sprintf "\nGyro 1 Curr 1 %6.2f  Roll Bias  %7.4f  EPH 27I %9.2f", ${$h{AIRU1G1I}}[1], ${$h{AOGBIAS1}}[1]*206264.98, ${$h{"5HSE202"}}[1];
 $s .= sprintf "%23s M Unload %6s\n", " ",${$h{AOUNLOAD}}[1];
-$s .= sprintf "Gyro 1 Curr 2 %6.2f  Pitch Bias %7.4f", ${$h{AIRU1G2I}}[1], ${$h{AOGBIAS2}}[1]*206264.98;
+$s .= sprintf "Gyro 2 Curr 2 %6.2f  Pitch Bias %7.4f", ${$h{AIRU2G2I}}[1], ${$h{AOGBIAS2}}[1]*206264.98;
 if (${$h{CTXAPWR}}[1] > 15) {
   $s .= sprintf "   CTX A PWR   %6.2f", ${$h{CTXAPWR}}[1];
 } else {
   $s .= sprintf "   CTX B PWR   %6.2f", ${$h{CTXBPWR}}[1];
 }
-#$s .= sprintf "Gyro 1 Curr 2 %6.2f  Pitch Bias %7.4f  EPH 27V %9.2f", ${$h{AIRU1G2I}}[1], ${$h{AOGBIAS2}}[1]*206264.98, ${$h{ACV_P27V}}[1];
 $s .= sprintf "   TSC Move %6s\n", ${$h{"3TSCMOVE"}}[1];
-$s .= sprintf "Gyro 2 Curr 1 %6.2f  Yaw Bias   %7.4f", ${$h{AIRU2G1I}}[1], ${$h{AOGBIAS3}}[1]*206264.98;
+$s .= sprintf "Prop. line 03 %6.2f  Yaw Bias   %7.4f", ${$h{PLINE03T}}[1], ${$h{AOGBIAS3}}[1]*206264.98;
 if (${$h{CTXAV}}[1] > 1) {
   $s .= sprintf "   CTX A Volts %6.2f", ${$h{CTXAV}}[1];
 } else {
   $s .= sprintf "   CTX B Volts %6.2f", ${$h{CTXBV}}[1];
 }
 $s .= sprintf "   FA Move  %6s\n", ${$h{"3FAMOVE"}}[1];
-$s .= sprintf "Gyro 2 Curr 2 %6.2f", ${$h{AIRU2G2I}}[1];
+$s .= sprintf "Prop. line 04 %6.2f", ${$h{PLINE04T}}[1];
 $s .= sprintf "%43s OTG Move %6s\n", " ",${$h{"4OOTGMEF"}}[1];
 
 return $s;
@@ -312,8 +311,8 @@ $s .= sprintf "%43s<font color=%s>EPH temp %9.2f</font>\n",
                " ",${$h{TEPHIN}}[3], ${$h{TEPHIN}}[1];
 
 $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/iru_plot.html" STYLE="text-decoration: none" target="blank">';
-$s .= sprintf "<font color=%s>Gyro 1 Curr 1 %6.2f</font></a>   ", 
-               ${$h{AIRU1G1I}}[3], ${$h{AIRU1G1I}}[1];
+$s .= sprintf "<font color=%s>Gyro 2 Curr 1 %6.2f</font></a>   ", 
+               ${$h{AIRU2G1I}}[3], ${$h{AIRU2G1I}}[1];
 $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/iru_bias_plot.html" STYLE="text-decoration: none" target="blank">';
 $s .= sprintf "<font color=%s>Roll Bias  %7.4f</font></a>", 
                ${$h{AOGBIAS1}}[3], ${$h{AOGBIAS1}}[1]*206264.98;
@@ -327,8 +326,8 @@ if ((${$h{"5EHSE106"}}[1]) % 2 == 1) {
 $s .= sprintf "%3s<font color=%s>M Unload %6s</font></a>\n", 
                " ",${$h{AOUNLOAD}}[3], ${$h{AOUNLOAD}}[1];
 $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/iru_plot.html" STYLE="text-decoration: none" target="blank">';
-$s .= sprintf "<font color=%s>Gyro 1 Curr 2 %6.2f</font></a>   ", 
-               ${$h{AIRU1G2I}}[3], ${$h{AIRU1G2I}}[1];
+$s .= sprintf "<font color=%s>Gyro 2 Curr 2 %6.2f</font></a>   ", 
+               ${$h{AIRU2G2I}}[3], ${$h{AIRU2G2I}}[1];
 $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/iru_bias_plot.html" STYLE="text-decoration: none" target="blank">';
 $s .= sprintf "<font color=%s>Pitch Bias %7.4f</font></a>", 
                ${$h{AOGBIAS2}}[3], ${$h{AOGBIAS2}}[1]*206264.98;
@@ -336,8 +335,8 @@ $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/ctx_plot.html" S
 $s .= sprintf "%23s<font color=%s>TSC Move %6s</font></a>\n",
                " ",${$h{"3TSCMOVE"}}[3], ${$h{"3TSCMOVE"}}[1];
 $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/iru_plot.html" STYLE="text-decoration: none" target="blank">';
-$s .= sprintf "<font color=%s>Gyro 2 Curr 1 %6.2f</font></a>   ",
-               ${$h{AIRU1G2I}}[3], ${$h{AIRU2G1I}}[1];
+$s .= sprintf "<font color=%s>Prop. line 03 %6.2f</font></a>   ",
+               ${$h{PLINE03T}}[3], ${$h{PLINE03T}}[1];
 $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/iru_bias_plot.html" STYLE="text-decoration: none" target="blank">';
 $s .= sprintf "<font color=%s>Yaw Bias   %7.4f</font></a>",
                ${$h{AOGBIAS3}}[3], ${$h{AOGBIAS3}}[1]*206264.98;
@@ -350,8 +349,8 @@ if (${$h{CTXAPWR}}[1] > 15) {
 $s .= sprintf "   <font color=%s>FA Move  %6s</font>\n",
                ${$h{"3FAMOVE"}}[3], ${$h{"3FAMOVE"}}[1];
 $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/iru_plot.html" STYLE="text-decoration: none" target="blank">';
-$s .= sprintf "<font color=%s>Gyro 2 Curr 2 %6.2f</font></a>", 
-               ${$h{AIRU2G2I}}[3], ${$h{AIRU2G2I}}[1];
+$s .= sprintf "<font color=%s>Prop. line 04 %6.2f</font></a>", 
+               ${$h{PLINE04T}}[3], ${$h{PLINE04T}}[1];
 if (${$h{CTXAV}}[1] > 1) {
   $s .= sprintf "%23s<font color=%s>CTX A Volts  %5.2f</font>", " ",${$h{CTXAV}}[3],${$h{CTXAV}}[1];
 } else {
@@ -560,6 +559,8 @@ printf S "G1 Curr1 %6.2f<br/>\n", ${$h{AIRU1G1I}}[1];
 printf S "G1 Curr2 %6.2f<br/>\n", ${$h{AIRU1G2I}}[1];
 printf S "G2 Curr1 %6.2f<br/>\n", ${$h{AIRU2G1I}}[1];
 printf S "G2 Curr2 %6.2f<br/>\n", ${$h{AIRU2G2I}}[1];
+printf S "Pline03T %6.2f<br/>\n", ${$h{PLINE03T}}[1];
+printf S "Pline04T %6.2f<br/>\n", ${$h{PLINE04T}}[1];
 printf S "<a href=\'snap2.wml'>Index</a><br/>\n";
 printf S "<a href=\'snap_curr.wml'>Current</a><br/>\n";
 printf S "</p></card>\n";
@@ -709,6 +710,8 @@ printf S "G1 Curr1 %7.2f \*%1s\n", ${$h{AIRU1G1I}}[1], ${$h{AIRU1G1I}}[2];
 printf S "G1 Curr2 %7.2f \*%1s\n", ${$h{AIRU1G2I}}[1], ${$h{AIRU1G2I}}[2];
 printf S "G2 Curr1 %7.2f \*%1s\n", ${$h{AIRU2G1I}}[1], ${$h{AIRU2G1I}}[2];
 printf S "G2 Curr2 %7.2f \*%1s\n", ${$h{AIRU2G2I}}[1], ${$h{AIRU2G2I}}[2];
+printf S "Pline03T %7.2f \*%1s\n", ${$h{PLINE03T}}[1], ${$h{PLINE03T}}[2];
+printf S "Pline04T %7.2f \*%1s\n", ${$h{PLINE04T}}[1], ${$h{PLINE04T}}[2];
 close S;
 
 open (S, ">>$wapdir/seph.$date");

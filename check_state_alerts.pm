@@ -795,6 +795,102 @@ sub shldart {
   return $color;
 }
 
+sub pline03t {
+    my $val = $_[0];
+    my $afile = "/home/mta/Snap/.pline03talert";
+    my $tfile = "/home/mta/Snap/.pline03twait";
+    $color = $BLU;
+    if ($val > 42.5) {
+      $color = $GRN;
+      if (-s $afile) {
+        my $tnum = 3;  # but, wait a little while before deleting lock
+        if (-s $tfile) {
+          open (TF, "<$tfile");
+          $tnum = <TF>;
+          close TF;
+        }
+        $tnum--;
+        if ($tnum == 0) {
+          unlink $afile;
+        }
+        if ($tnum > 0) {
+          open (TF, ">$tfile");
+          print TF $tnum;
+          close TF;
+        }
+      }
+    } # if ($val > 42.5) {
+    if ($val < 42.5) {
+      $color = $YLW;
+      my $tnum = 0;  # but, wait a little while before waking people up
+      if (-s $tfile) {
+        open (TF, "<$tfile");
+        $tnum = <TF>;
+        close TF;
+      }
+      $tnum++;
+      if ($tnum == 3) {
+        send_pline03t_alert($val);
+      }
+      if ($tnum <= 1) {
+        open (TF, ">$tfile");
+        print TF $tnum;
+        close TF;
+      }
+      if ($val < 40.0) {$color=$RED;}
+    } #if ($val < 42.5) {
+  }
+  return $color;
+}
+
+sub pline04t {
+    my $val = $_[0];
+    my $afile = "/home/mta/Snap/.pline04talert";
+    my $tfile = "/home/mta/Snap/.pline04twait";
+    $color = $BLU;
+    if ($val > 42.5) {
+      $color = $GRN;
+      if (-s $afile) {
+        my $tnum = 3;  # but, wait a little while before deleting lock
+        if (-s $tfile) {
+          open (TF, "<$tfile");
+          $tnum = <TF>;
+          close TF;
+        }
+        $tnum--;
+        if ($tnum == 0) {
+          unlink $afile;
+        }
+        if ($tnum > 0) {
+          open (TF, ">$tfile");
+          print TF $tnum;
+          close TF;
+        }
+      }
+    } # if ($val > 42.5) {
+    if ($val < 42.5) {
+      $color = $YLW;
+      my $tnum = 0;  # but, wait a little while before waking people up
+      if (-s $tfile) {
+        open (TF, "<$tfile");
+        $tnum = <TF>;
+        close TF;
+      }
+      $tnum++;
+      if ($tnum == 3) {
+        send_pline04t_alert($val);
+      }
+      if ($tnum <= 1) {
+        open (TF, ">$tfile");
+        print TF $tnum;
+        close TF;
+      }
+      if ($val < 40.0) {$color=$RED;}
+    } #if ($val < 42.5) {
+  }
+  return $color;
+}
+
 sub send_107_alert {
   # send e-mail alert if SCS107 DISA
   my $obstime = ${$hash{COSCS107S}}[0];
@@ -1238,6 +1334,56 @@ sub send_hkp27v_alert {
     close FILE;
 
     open MAIL, "|mailx -s HKP27V sot_yellow_alert\@head.cfa.harvard.edu";
+    open FILE, $afile;
+    while (<FILE>) {
+      print MAIL $_;
+    }
+    close FILE;
+    close MAIL;
+  }
+}
+
+sub send_pline03t_alert {
+  my $obstime = ${$hash{"PLINE03T"}}[0];
+  if (! time_curr($obstime)) {
+    return;
+  }
+  my $afile = "/home/mta/Snap/.pline03talert";
+  if (-s $afile) {
+  } else {
+    open FILE, ">$afile";
+    print FILE "Chandra realtime telemetry shows  PLINE03T = $_[0] F at $obt UT\n";
+    print FILE "Limit > 42.5 V\n\n";
+    print FILE "This message sent to sot_yellow_alert\n"; #debug
+    close FILE;
+
+    open MAIL, "|mailx -s PLINE03T brad\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s PLINE03T sot_yellow_alert\@head.cfa.harvard.edu";
+    open FILE, $afile;
+    while (<FILE>) {
+      print MAIL $_;
+    }
+    close FILE;
+    close MAIL;
+  }
+}
+
+sub send_pline04t_alert {
+  my $obstime = ${$hash{"PLINE04T"}}[0];
+  if (! time_curr($obstime)) {
+    return;
+  }
+  my $afile = "/home/mta/Snap/.pline04talert";
+  if (-s $afile) {
+  } else {
+    open FILE, ">$afile";
+    print FILE "Chandra realtime telemetry shows  PLINE04T = $_[0] F at $obt UT\n";
+    print FILE "Limit > 42.5 V\n\n";
+    print FILE "This message sent to sot_yellow_alert\n"; #debug
+    close FILE;
+
+    open MAIL, "|mailx -s PLINE04T brad\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s PLINE04T sot_yellow_alert\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
