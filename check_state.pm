@@ -391,9 +391,9 @@ sub scs107 {
         $tnum++;
         if ($tnum == 2) {
           send_107_alert($val);
-          if (${$hash{3TSCPOS}}[1] > -99000) {
-            send_sim_unsafe_alert(${$hash{3TSCPOS}}[1]);
-          } # if (${$hash{3TSCPOS}}[1] > -99000) {
+          if (${$hash{"3TSCPOS"}}[1] > -99000) {
+            send_sim_unsafe_alert(${$hash{"3TSCPOS"}}[1]);
+          } # if (${$hash{"3TSCPOS"}}[1] > -99000) {
         }
         if ($tnum <= 1) {
           open (TF, ">$tfile");
