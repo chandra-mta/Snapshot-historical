@@ -725,8 +725,7 @@ sub hkp27v {
       }
     }
     if ($val < $lim && abs($val-$prev) lt $abs_diff && abs($val-$prev) gt 1) {
-      #$color = $RED; # leave white for now
-      $color = $WHT;
+      $color = $YLW;
       my $tnum = 0;  # but, wait a little while before waking people up
       if (-s $tfile) {
         open (TF, "<$tfile");
@@ -1158,11 +1157,10 @@ sub send_hkp27v_alert {
     open FILE, ">$afile";
     print FILE "Chandra realtime telemetry shows EPHIN HKP27V Voltage = $_[0] V at $obt UT\n";
     print FILE "Limit > 26.0 V\n\n";
-    print FILE "This message sent to brad swolk\n"; #debug
+    print FILE "This message sent to sot_yellow_alert\n"; #debug
     close FILE;
 
-    open MAIL, "|mailx -s HKP27V brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    #open MAIL, "|mailx -s HKP27V brad\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s HKP27V sot_yellow_alert\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
