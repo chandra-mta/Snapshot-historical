@@ -290,8 +290,8 @@ sub imfunc {
       $color = $GRN;
       if ($val =~ 'N') {
         my $obs = ${$hash{COBSRQID}}[1];
-        if ($obs lt 60000) { $color = $RED; }
-        if ($obs ge 60000) { $color = $YLW; }
+        if ($obs lt 55000) { $color = $RED; }
+        if ($obs ge 55000) { $color = $YLW; }
       }
     }
     return $color;
