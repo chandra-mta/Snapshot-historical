@@ -111,7 +111,9 @@ sub check_state {
         $funcall =~ s/\s+$//;
         #print "$funcall $val\n";  # DEBUG
         $stat=${$hash{"5EHSE106"}}[1];
-        @args=($val,$stat);
+        $prev=${$hash{"5HSE202a"}}[1];
+        $pstat=${$hash{"5EHSE106a"}}[1];
+        @args=($val,$stat,$prev,$pstat);
         $color = &$funcall(@args);
       }
 
@@ -656,8 +658,12 @@ sub ctxbv {
 sub hkp27v {
   my $val = @_[0];
   my $stat = @_[1];
+  my $prev = @_[2];
+  my $pstat = @_[3];
   my $afile = "/home/mta/Snap/.hkp27valert";
   my $tfile = "/home/mta/Snap/.hkp27vwait";
+  $k=abs($val-$prev);
+  print "HKP27V $k\n";
   #print "HKP27V  $val $stat \n";
   $color = $WHT;
   if ($stat % 2 == 1) {
@@ -681,7 +687,7 @@ sub hkp27v {
         }
       }
     }
-    if ($val < 26.00) {
+    if ($val < 26.00 && abs($val-$prev) lt 7) {
       #$color = $RED; # leave white for now
       $color = $WHT;
       my $tnum = 0;  # but, wait a little while before waking people up
