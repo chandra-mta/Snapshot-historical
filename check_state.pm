@@ -659,7 +659,7 @@ sub hkp27v {
   my ($val,$stat,$prev,$pstat,$lim,$abs_diff)=@_;
   my $afile = "/home/mta/Snap/.hkp27valert";
   my $tfile = "/home/mta/Snap/.hkp27vwait";
-  print "HKP27V  $val $stat $lim\n";
+  #print "HKP27V  $val $stat $lim\n";
   $color = $WHT;
   if ($stat % 2 == 1) {
     if ($val >= $lim) {
