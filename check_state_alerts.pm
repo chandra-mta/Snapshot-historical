@@ -5,9 +5,6 @@ sub check_state {
     #use lib '//Snap';
     use Chex;
 
-    `date >> /home/mta/Snap/hostlog`;
-    `hostname >> /home/mta/Snap/hostlog`;
-
     %hash = @_;
     # Create the Chandra Expected state object
     #$chex_file = "/proj/sot/ska/dev/starcheck/TEST//pred_state.rdb";
@@ -468,23 +465,23 @@ sub ctxapwr {
   $color = $GRN;
   if ($val < $ctxa_pwr_lim) {
     $color = $GRN;
-    if (-s $afile) {
-      my $tnum = 50;  # but, wait a little while before deleting lock
-      if (-s $dfile) {
-        open (TF, "<$dfile");
-        $dnum = <TF>;
-        close TF;
-      }
-      $dnum--;
-      if ($dnum == 0) {
+    my $tnum = 50;  # but, wait a little while before deleting lock
+    if (-s $dfile) {
+      open (TF, "<$dfile");
+      $dnum = <TF>;
+      close TF;
+    }
+    $dnum--;
+    if ($dnum == 0) {
+      if (-s $afile) {
         unlink $afile;
-        unlink $tfile;
       }
-      if ($dnum > 0) {
-        open (TF, ">$dfile");
-        print TF $dnum;
-        close TF;
-      }
+      unlink $tfile;
+    }
+    if ($dnum > 0) {
+      open (TF, ">$dfile");
+      print TF $dnum;
+      close TF;
     }
   }
   if ($val >= $ctxa_pwr_lim) {
@@ -522,23 +519,23 @@ sub ctxbpwr {
   $color = $GRN;
   if ($val < $ctxb_pwr_lim) {
     $color = $GRN;
-    if (-s $afile) {
-      my $dnum = 50;  # but, wait a little while before deleting lock
-      if (-s $dfile) {
-        open (TF, "<$dfile");
-        $dnum = <TF>;
-        close TF;
-      }
-      $dnum--;
-      if ($dnum == 0) {
+    my $dnum = 50;  # but, wait a little while before deleting lock
+    if (-s $dfile) {
+      open (TF, "<$dfile");
+      $dnum = <TF>;
+      close TF;
+    }
+    $dnum--;
+    if ($dnum == 0) {
+      if (-s $afile) {
         unlink $afile;
-        unlink $tfile;
       }
-      if ($dnum > 0) {
-        open (TF, ">$dfile");
-        print TF $dnum;
-        close TF;
-      }
+      unlink $tfile;
+    }
+    if ($dnum > 0) {
+      open (TF, ">$dfile");
+      print TF $dnum;
+      close TF;
     }
   }
   if ($val >= $ctxb_pwr_lim) {
@@ -571,22 +568,22 @@ sub ctxav {
   $color = $GRN;
   if ($val < 3.60) {
     $color = $GRN;
-    if (-s $afile) {
-      my $tnum = 3;  # but, wait a little while before deleting lock
-      if (-s $tfile) {
-        open (TF, "<$tfile");
-        $tnum = <TF>;
-        close TF;
+    my $tnum = 3;  # but, wait a little while before deleting lock
+    if (-s $tfile) {
+      open (TF, "<$tfile");
+      $tnum = <TF>;
+      close TF;
+    }
+    $tnum--;
+    if ($tnum == 0) {
+      if (-s $afile) {
+      unlink $afile;
       }
-      $tnum--;
-      if ($tnum == 0) {
-        unlink $afile;
-      }
-      if ($tnum > 0) {
-        open (TF, ">$tfile");
-        print TF $tnum;
-        close TF;
-      }
+    }
+    if ($tnum > 0) {
+      open (TF, ">$tfile");
+      print TF $tnum;
+      close TF;
     }
   }
   if ($val >= 3.60) {
@@ -618,22 +615,22 @@ sub ctxbv {
   $color = $GRN;
   if ($val < 3.60) {
     $color = $GRN;
-    if (-s $afile) {
-      my $tnum = 3;  # but, wait a little while before deleting lock
-      if (-s $tfile) {
-        open (TF, "<$tfile");
-        $tnum = <TF>;
-        close TF;
+    my $tnum = 3;  # but, wait a little while before deleting lock
+    if (-s $tfile) {
+      open (TF, "<$tfile");
+      $tnum = <TF>;
+      close TF;
+    }
+    $tnum--;
+    if ($tnum == 0) {
+      if (-s $afile) {
+      unlink $afile;
       }
-      $tnum--;
-      if ($tnum == 0) {
-        unlink $afile;
-      }
-      if ($tnum > 0) {
-        open (TF, ">$tfile");
-        print TF $tnum;
-        close TF;
-      }
+    }
+    if ($tnum > 0) {
+      open (TF, ">$tfile");
+      print TF $tnum;
+      close TF;
     }
   }
   if ($val >= 3.60) {
@@ -667,22 +664,22 @@ sub hkp27v {
   if ($stat % 2 == 1) {
     if ($val >= $lim) {
       $color = $GRN;
-      if (-s $afile) {
-        my $tnum = 3;  # but, wait a little while before deleting lock
-        if (-s $tfile) {
-          open (TF, "<$tfile");
-          $tnum = <TF>;
-          close TF;
-        }
-        $tnum--;
-        if ($tnum == 0) {
+      my $tnum = 3;  # but, wait a little while before deleting lock
+      if (-s $tfile) {
+        open (TF, "<$tfile");
+        $tnum = <TF>;
+        close TF;
+      }
+      $tnum--;
+      if ($tnum == 0) {
+        if (-s $afile) {
           unlink $afile;
         }
-        if ($tnum > 0) {
-          open (TF, ">$tfile");
-          print TF $tnum;
-          close TF;
-        }
+      }
+      if ($tnum > 0) {
+        open (TF, ">$tfile");
+        print TF $tnum;
+        close TF;
       }
     }
     if ($val < $lim && abs($val-$prev) lt $abs_diff && abs($val-$prev) gt 1) {
