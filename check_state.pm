@@ -774,7 +774,7 @@ sub shldart {
       }
     }
   }
-  if ($val > 245 && $val < 256 ) {
+  if ($val > 245 && ${$hash{CORADMEN}}[1] eq 'ENAB') {
     $color = $YLW;
     my $tnum = 0;  # but, wait a little while before waking people up
     if (-s $tfile) {
