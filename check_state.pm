@@ -692,10 +692,10 @@ sub hkp27v {
         close TF;
       }
       $tnum++;
-      if ($tnum == 3) {
+      if ($tnum == 5) {
         send_hkp27v_alert($val);
       }
-      if ($tnum <= 3) {
+      if ($tnum <= 5) {
         open (TF, ">$tfile");
         print TF $tnum;
         close TF;
