@@ -198,22 +198,22 @@ $s .= sprintf "<font color=%s>Dith Zang %6.2f    </font>",
                ${$h{AODITHR2}}[3], ${$h{AODITHR2}}[1];
 $s .= sprintf "<font color=%s>Pitch Rate %7.2f      </font>",
                ${$h{AORATE2}}[3], ${$h{AORATE2}}[1];
-$s .= sprintf "<font color=%s>OBSMode %4s</font>\n",
-               ${$h{"2OBNLASL"}}[3], ${$h{"2OBNLASL"}}[1];
+$s .= sprintf "<font color=%s>HRC-SHLD HV %4s</font>\n",
+               ${$h{"2S2HVST"}}[3], ${$h{"2S2HVST"}}[1];
 
 $s .= sprintf "<font color=%s>ACA Int Time %6.3f                        </font>",
                ${$h{AOACINTT}}[3], ${$h{AOACINTT}}[1];
 $s .= sprintf "<font color=%s>Roll Rate  %7.2f      </font>",
                ${$h{AORATE1}}[3], ${$h{AORATE1}}[1];
-$s .= sprintf "<font color=%s>Door OP %4s</font>\n",
-               ${$h{"2DRLSOP"}}[3], ${$h{"2DRLSOP"}}[1];
+$s .= sprintf "<font color=%s>HRC-EVT RATE %4d</font>\n",
+               ${$h{"2SHLDART"}}[3], ${$h{"2SHLDART"}}[1];
 
 $s .= sprintf "<font color=%s>AOACSTAT       %4s    </font>",
                ${$h{AOACSTAT}}[3], ${$h{AOACSTAT}}[1];
 $s .= sprintf "<font color=%s>FSS SunBeta %4s                            </font>",
                ${$h{AOBETSUN}}[3], ${$h{AOBETSUN}}[1];
-$s .= sprintf "<font color=%s>Door CL %4s</font>\n",
-               ${$h{"2DRLSCL"}}[3], ${$h{"2DRLSCL"}}[1];
+$s .= sprintf "<font color=%s>HRC-SHLD RATE %4d</font>\n",
+               ${$h{"2DETART"}}[3], ${$h{"2DETART"}}[1];
 
 $s .= sprintf "                       ";
 $s .= sprintf "<font color=%s>FSS Alfa  %6.2f    </font>",
