@@ -181,14 +181,52 @@ sub pcadmode {
       if ($val eq 'NMAN') {$color = $GRN;}
     } else {
       if ($val eq 'NPNT') {$color = $GRN;}
-      if ($val eq 'NMAN') {$color = $RED;}
+      if ($val eq 'NMAN') {$color = $YLW;}
     }
     if ($grat[0] eq $UNDEF) {
       if ($val eq 'NMAN') {$color = $GRN;}
     }
-
-    return $color;
-}
+    my $afile = "/home/mta/Snap/.nsunalert";
+    my $tfile = "/home/mta/Snap/.nsunwait";
+    if ($val eq 'NPNT' || $val eq 'NMAN') {
+      if (-s $afile) {
+        my $tnum = 3;  # but, wait a little while before deleting lock
+        if (-s $tfile) {
+          open (TF, "<$tfile");
+          $tnum = <TF>;
+          close TF;
+        }
+        $tnum--;
+        if ($tnum == 0) {
+          unlink $afile;
+        }
+        if ($tnum > 0) {
+          open (TF, ">$tfile");
+          print TF $tnum;
+          close TF;
+        }
+      } # if (-s $afile) {
+    } # if ($val eq 'NPNT' || $val eq 'NMAN') {
+    if ($val eq 'NSUN') {
+      $color = $RED;
+      my $tnum = 0;  # but, wait a little while before waking people up
+      if (-s $tfile) {
+        open (TF, "<$tfile");
+        $tnum = <TF>;
+        close TF;
+      }
+      $tnum++;
+      if ($tnum == 2) {
+        send_nsun_alert($val);
+      }
+      if ($tnum <= 1) {
+        open (TF, ">$tfile");
+        print TF $tnum;
+        close TF;
+      }
+    } # if ($val eq 'NSUN') {
+  return $color;
+} #pcadmode
 
 sub hetg {
     my $val = $_[0];
@@ -318,7 +356,7 @@ sub scs107 {
     my $afile = "/home/mta/Snap/.scs107alert";
     my $tfile = "/home/mta/Snap/.scs107wait";
     $color = $BLU;
-    if (${$hash{COTLRDSF}}[1] eq 'EPS') {
+    #if (${$hash{COTLRDSF}}[1] eq 'EPS') {
       $color = $YLW;
       if ($val eq 'INAC') {
         $color = $GRN;
@@ -351,16 +389,19 @@ sub scs107 {
           close TF;
         }
         $tnum++;
-        if ($tnum == 3) {
+        if ($tnum == 2) {
           send_107_alert($val);
+          if (${$hash{3TSCPOS}}[1] > -99000) {
+            send_sim_unsafe_alert(${$hash{3TSCPOS}}[1]);
+          } # if (${$hash{3TSCPOS}}[1] > -99000) {
         }
-        if ($tnum <= 2) {
+        if ($tnum <= 1) {
           open (TF, ">$tfile");
           print TF $tnum;
           close TF;
         }
       }
-    }
+    #} #if (${$hash{COTLRDSF}}[1] eq 'EPS') {
     return $color;
 }
 
@@ -775,6 +816,95 @@ sub send_107_alert {
   }
 }
 
+sub send_nsun_alert {
+  my $obstime = ${$hash{AOPCADMD}}[0];
+  if (! time_curr($obstime)) {
+    return;
+  }
+  my $afile = "/home/mta/Snap/.nsunalert";
+  my $comfile = "/pool14/chandra/DSN.schedule";
+  if (-s $afile) {
+  } else {
+    open FILE, ">$afile";
+    print FILE "Chandra realtime telemetry shows PCADMODE $_[0] at $obt UT\n\n";
+    # try to figure out next comm passes
+    open COMS, $comfile;
+    my @time = split(":", $obt);
+    # use decimal day to allow comms spanning two days
+    my $day = $time[1] + ($time[2]/24) + ($time[3]/1440);
+    while (<COMS>) {
+      my @line = split(" ", $_);
+      #print FILE "$time[0] $time[1] $time[2] $time[3]\n"; # debug
+      #print FILE "$line[0] $line[4] $line[6] $line[7]\n"; # debug
+      if ($line[0] < $time[0]) {next;}
+      if ($line[4] < $time[1]) {next;}
+      #if ($line[7] < ("$time[2]"."$time[3]")) {next;}
+      if ($line[3] < $day) {next;}
+      my @next = split(/\./, $line[1]);
+      print FILE "Current pass:  $line[0]:$next[0]:$line[6] to $line[7]\n";
+      print FILE "Next passes:   ";
+      @line = split(" ", <COMS>);
+      @next = split(/\./, $line[1]);
+      print FILE "$line[0]:$next[0]:$line[6] to $line[7]\n";
+      @line = split(" ", <COMS>);
+      @next = split(/\./, $line[1]);
+      print FILE "               $line[0]:$next[0]:$line[6] to $line[7]\n";
+      @line = split(" ", <COMS>);
+      @next = split(/\./, $line[1]);
+      print FILE "               $line[0]:$next[0]:$line[6] to $line[7]\n";
+      last;
+    }
+      
+    print FILE "\nSnapshot:\n";
+    print FILE "http://cxc.harvard.edu/cgi-gen/mta/Snap/snap.cgi\n"; #debug
+    #print FILE "This message sent to sot_yellow_alert\n"; #debug
+    #print FILE "This message sent to sot_red_alert\n"; #debug
+    print FILE "This message sent to brad swolk\n"; #debug
+    #print FILE "\n TEST   TEST   TEST   TEST   TEST   TEST   TEST\n"; #debug
+    close FILE;
+
+    open MAIL, "|mailx -s NSUN brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s NSUN sot_yellow_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s NSUN sot_red_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s NSUN sot_red_alert\@head.cfa.harvard.edu operators";
+    #open MAIL, "|more"; #debug
+    open FILE, $afile;
+    while (<FILE>) {
+      print MAIL $_;
+    }
+    close FILE;
+    close MAIL;
+  }
+} #send_nsun_alert
+
+sub send_sim_unsafe_alert {
+  # send e-mail alert if SCS107 DISA and sim position gt -99000
+  my $obstime = ${$hash{COSCS107S}}[0];
+  if (! time_curr($obstime)) {
+    return;
+  }
+  my $afile = "/home/mta/Snap/.sim_unsafe_alert";
+  if (-s $afile) {
+  } else {
+    open FILE, ">$afile";
+    print FILE "Chandra realtime telemetry shows SCS107 DISABLED and SIM at $_[0] at $obt UT\n\n";
+      
+    print FILE "\nSnapshot:\n";
+    print FILE "http://cxc.harvard.edu/cgi-gen/mta/Snap/snap.cgi\n"; #debug
+    print FILE "This message sent to brad swolk\n"; #debug
+    close FILE;
+
+    open MAIL, "|mailx -s SIM_UNSAFE! brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s SIM_UNSAFE! sot_red_alert\@head.cfa.harvard.edu operators";
+    open FILE, $afile;
+    while (<FILE>) {
+      print MAIL $_;
+    }
+    close FILE;
+    close MAIL;
+  }
+}
+
 sub send_brit_alert {
   # send e-mail alert if AOFSTAR BRIT
   my $obstime = ${$hash{AOFSTAR}}[0];
@@ -821,18 +951,18 @@ sub send_brit_alert {
     print FILE "\nSnapshot:\n";
     print FILE "http://cxc.harvard.edu/cgi-gen/mta/Snap/snap.cgi\n"; #debug
     #print FILE "http://cxc.harvard.edu/mta_days/MIRROR/Snap/snap.cgi\n"; #debug
-    #print FILE "This message sent to sot_yellow_alert\n"; #debug
+    print FILE "This message sent to sot_yellow_alert\n"; #debug
     #print FILE "This message sent to sot_red_alert\n"; #debug
     #print FILE "This message sent to brad rac swolk\n"; #debug
-    print FILE "This message sent to brad\n"; #debug
+    #print FILE "This message sent to brad\n"; #debug
     #print FILE "\n TEST   TEST   TEST   TEST   TEST   TEST   TEST\n"; #debug
     close FILE;
 
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu rac\@head.cfa.harvard.edu";
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    #open MAIL, "|mail sot_yellow_alert\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s BRIT sot_yellow_alert\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s BRIT sot_red_alert\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s BRIT brad\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s BRIT brad\@head.cfa.harvard.edu";
     #open MAIL, "|mail brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     open FILE, $afile;
