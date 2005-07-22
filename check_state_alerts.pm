@@ -1186,12 +1186,12 @@ sub send_fmt_alert {
       
     print FILE "\nSnapshot:\n";
     print FILE "http://cxc.harvard.edu/cgi-gen/mta/Snap/snap.cgi\n"; #debug
-    print FILE "This message sent to sot_red_alert\n"; #debug
+    print FILE "This message sent to sot_safemode_alert\n"; #debug
     #print FILE "\n TEST   TEST   TEST   TEST   TEST   TEST   TEST\n"; #debug
     close FILE;
 
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu rac\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s FMT5 sot_red_alert\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s FMT5 sot_safemode_alert\@head.cfa.harvard.edu";
     #open MAIL, "|mail brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     open FILE, $afile;
