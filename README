@@ -1,0 +1,10 @@
+
+
+update_cus_mail.perl
+--------------------
+
+This script moves an old cus email to archive and clean up a current directory.
+
+This script must be run by a user "cus". 
+
+Currently this script is run 1st of every month at 3am on rhodes (cron job).
