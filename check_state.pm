@@ -378,7 +378,8 @@ sub scs107 {
           }
         }
       }
-      if ($val eq 'DISA' && ${$hash{COSCS128S}}[1] eq 'INAC' && ${$hash{COSCS129S}}[1] eq 'INAC' && ${$hash{COSCS130S}}[1] eq 'INAC') {
+      #if ($val eq 'DISA' && ${$hash{COSCS128S}}[1] eq 'INAC' && ${$hash{COSCS129S}}[1] eq 'INAC' && ${$hash{COSCS130S}}[1] eq 'INAC') {
+      if ($val eq 'ACT' || $val eq 'DISA') {
       # add extra checks, rhodes is being shifty 08/12/03 bds
       #if ($val eq 'DISA') {
         $color = $RED;
