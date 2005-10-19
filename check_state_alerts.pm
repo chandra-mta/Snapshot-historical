@@ -378,7 +378,8 @@ sub scs107 {
           }
         }
       }
-      if ($val eq 'DISA' && ${$hash{COSCS128S}}[1] eq 'INAC' && ${$hash{COSCS129S}}[1] eq 'INAC' && ${$hash{COSCS130S}}[1] eq 'INAC') {
+      if (($val eq 'ACT' || $val eq 'DISA') && ${$hash{COSCS128S}}[1] eq 'INAC' && ${$hash{COSCS129S}}[1] eq 'INAC' && ${$hash{COSCS130S}}[1] eq 'INAC') {
+      #if ($val eq 'ACT' || $val eq 'DISA') {
       # add extra checks, rhodes is being shifty 08/12/03 bds
       #if ($val eq 'DISA') {
         $color = $RED;
@@ -389,7 +390,7 @@ sub scs107 {
           close TF;
         }
         $tnum++;
-        if ($tnum == 2) {
+        if ($tnum == 3) {
           send_107_alert($val);
           if (${$hash{"3TSCPOS"}}[1] > -99000) {
             send_sim_unsafe_alert(${$hash{"3TSCPOS"}}[1]);
