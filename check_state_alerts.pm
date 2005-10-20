@@ -356,7 +356,7 @@ sub scs107 {
     my $afile = "/home/mta/Snap/.scs107alert";
     my $tfile = "/home/mta/Snap/.scs107wait";
     $color = $BLU;
-    #if (${$hash{COTLRDSF}}[1] eq 'EPS') {
+    if (${$hash{COTLRDSF}}[1] eq 'EPS') {
       $color = $YLW;
       if ($val eq 'INAC') {
         $color = $GRN;
@@ -402,7 +402,7 @@ sub scs107 {
           close TF;
         }
       }
-    #} #if (${$hash{COTLRDSF}}[1] eq 'EPS') {
+    } #if (${$hash{COTLRDSF}}[1] eq 'EPS') {
     return $color;
 }
 
