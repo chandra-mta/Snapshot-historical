@@ -371,7 +371,7 @@ sub scs107 {
           if ($tnum == 0) {
             unlink $afile;
           }
-          if ($tnum > 0) {
+          if ($tnum >= 0) {
             open (TF, ">$tfile");
             print TF $tnum;
             close TF;
