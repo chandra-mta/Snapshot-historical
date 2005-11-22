@@ -396,7 +396,7 @@ sub scs107 {
             send_sim_unsafe_alert(${$hash{"3TSCPOS"}}[1]);
           } # if (${$hash{"3TSCPOS"}}[1] > -99000) {
         }
-        if ($tnum <= 1) {
+        if ($tnum <= 3) {
           open (TF, ">$tfile");
           print TF $tnum;
           close TF;
