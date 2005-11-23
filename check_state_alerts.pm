@@ -254,9 +254,9 @@ sub e1300 {
     my $val = $_[0];
     my $radmon = ${$hash{CORADMEN}}[1];
     if ($radmon eq 'ENAB') {
-      if ($val < 3.3) {$color = $GRN;}
-      if ($val >= 3.3) {$color = $YLW;}
-      if ($val >= 10.0) {$color = $RED;}
+      if ($val < 6.6) {$color = $GRN;}
+      if ($val >= 6.6) {$color = $YLW;}
+      if ($val >= 20.0) {$color = $RED;}
     } else {$color = $BLU;}
     return $color;
 }
