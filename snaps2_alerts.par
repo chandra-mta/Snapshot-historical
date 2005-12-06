@@ -15,6 +15,9 @@
 #		function should be written in snaps[X].cgi
 #		passed snapshot text and test value
 #		returns color
+#
+#	5 - use a custom function	Args: function_name params
+#               with custom parameters
 #######################################################################
 3TSCPOS		1	simtsc		5
 3FAPOS		1	simfa		5
@@ -58,4 +61,7 @@ P41GM		4	p41gm
 CCSDSTMF	4	fmt
 ACAFCT		4	imfunc
 AOFSTAR		4	aofstar
-5HSE202		5	hkp27v
+2SHLDART	4	shldart
+PLINE03T	4	pline03t
+PLINE04T	4	pline04t
+5HSE202		5	hkp27v	26	8

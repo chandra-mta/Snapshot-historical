@@ -14,6 +14,7 @@ PERLLIB = check_state.pm check_state_alerts.pm check_state_force_alert.pm check_
 WWW  = snapshot_hlp.html
 
 #sed -e "s/.\/snaps2.par/\/home\/mta\/Snap\/snaps2.par/" check_state.pm > check_state_alerts.pm
+#cp snaps2.par snaps2_alert.par
 
 install:
 ifdef BIN
