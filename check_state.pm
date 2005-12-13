@@ -1330,7 +1330,8 @@ sub send_hkp27v_alert {
     print FILE "This message sent to sot_yellow_alert\n"; #debug
     close FILE;
 
-    open MAIL, "|mailx -s HKP27V sot_yellow_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s HKP27V sot_yellow_alert\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s HKP27V sot_lead fot";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
