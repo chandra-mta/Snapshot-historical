@@ -1327,11 +1327,11 @@ sub send_hkp27v_alert {
     open FILE, ">$afile";
     print FILE "Chandra realtime telemetry shows EPHIN HKP27V Voltage = $_[0] V at $obt UT\n";
     print FILE "Limit > 26.0 V\n\n";
-    print FILE "This message sent to sot_yellow_alert\n"; #debug
+    print FILE "This message sent to sot_lead,fot,emartin\n"; #debug
     close FILE;
 
     #open MAIL, "|mailx -s HKP27V sot_yellow_alert\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s HKP27V sot_lead fot";
+    open MAIL, "|mailx -s HKP27V sot_lead fot emartin 8006724485\@archwireless.net brad";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
