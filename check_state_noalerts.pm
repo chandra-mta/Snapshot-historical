@@ -889,7 +889,7 @@ sub pline04t {
   return $color;
 }
 
-sub send_107_alert {
+sub #send_107_alert {
   # send e-mail alert if SCS107 DISA
   my $obstime = ${$hash{COSCS107S}}[0];
   if (! time_curr($obstime)) {
@@ -945,9 +945,9 @@ sub send_107_alert {
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu rac\@head.cfa.harvard.edu";
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
     #open MAIL, "|mail sot_yellow_alert\@head.cfa.harvard.edu";
-    #open MAIL, "|nomailx -s SCS107 sot_red_alert\@head.cfa.harvard.edu";
-    open MAIL, "|nomailx -s SCS107 sot_red_alert\@head.cfa.harvard.edu operators";
-    #open MAIL, "|nomailx -s SCS107 brad\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s SCS107 sot_red_alert\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s SCS107 sot_red_alert\@head.cfa.harvard.edu operators";
+    #open MAIL, "|mailx -s SCS107 brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     open FILE, $afile;
     while (<FILE>) {
@@ -958,7 +958,7 @@ sub send_107_alert {
   }
 }
 
-sub send_nsun_alert {
+sub #send_nsun_alert {
   my $obstime = ${$hash{AOPCADMD}}[0];
   if (! time_curr($obstime)) {
     return;
@@ -1005,10 +1005,10 @@ sub send_nsun_alert {
     #print FILE "\n TEST   TEST   TEST   TEST   TEST   TEST   TEST\n"; #debug
     close FILE;
 
-    #open MAIL, "|nomailx -s NSUN brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    open MAIL, "|nomailx -s NSUN sot_yellow_alert\@head.cfa.harvard.edu";
-    #open MAIL, "|nomailx -s NSUN sot_red_alert\@head.cfa.harvard.edu";
-    #open MAIL, "|nomailx -s NSUN sot_red_alert\@head.cfa.harvard.edu operators";
+    #open MAIL, "|mailx -s NSUN brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s NSUN sot_yellow_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s NSUN sot_red_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s NSUN sot_red_alert\@head.cfa.harvard.edu operators";
     #open MAIL, "|more"; #debug
     open FILE, $afile;
     while (<FILE>) {
@@ -1019,7 +1019,7 @@ sub send_nsun_alert {
   }
 } ##send_nsun_alert
 
-sub send_sim_unsafe_alert {
+sub #send_sim_unsafe_alert {
   # send e-mail alert if SCS107 DISA and sim position gt -99000
   my $obstime = ${$hash{COSCS107S}}[0];
   if (! time_curr($obstime)) {
@@ -1036,8 +1036,8 @@ sub send_sim_unsafe_alert {
     print FILE "This message sent to sot_yellow_alert\n"; #debug
     close FILE;
 
-    #open MAIL, "|nomailx -s SIM_UNSAFE! brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    open MAIL, "|nomailx -s SIM_UNSAFE! sot_yellow_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s SIM_UNSAFE! brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s SIM_UNSAFE! sot_yellow_alert\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
@@ -1047,7 +1047,7 @@ sub send_sim_unsafe_alert {
   }
 }
 
-sub send_hrc_shld_alert {
+sub #send_hrc_shld_alert {
   my $obstime = ${$hash{"2SHLDART"}}[0];
   if (! time_curr($obstime)) {
     return;
@@ -1063,9 +1063,9 @@ sub send_hrc_shld_alert {
     print FILE "This message sent to sot_lead\n"; #debug
     close FILE;
 
-    #open MAIL, "|nomailx -s 'HRC SHIELD' brad\@head.cfa.harvard.edu";
-    #open MAIL, "|nomailx -s 'HRC SHIELD' brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    open MAIL, "|nomailx -s 'HRC SHIELD' sot_lead\@head.cfa.harvard.edu brad";
+    #open MAIL, "|mailx -s 'HRC SHIELD' brad\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s 'HRC SHIELD' brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s 'HRC SHIELD' sot_lead\@head.cfa.harvard.edu brad";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
@@ -1075,7 +1075,7 @@ sub send_hrc_shld_alert {
   }
 }
 
-sub send_brit_alert {
+sub #send_brit_alert {
   # send e-mail alert if AOFSTAR BRIT
   my $obstime = ${$hash{AOFSTAR}}[0];
   print "$obstime\n"; #debugbrit
@@ -1130,9 +1130,9 @@ sub send_brit_alert {
 
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu rac\@head.cfa.harvard.edu";
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    open MAIL, "|nomailx -s BRIT sot_yellow_alert\@head.cfa.harvard.edu";
-    #open MAIL, "|nomailx -s BRIT sot_red_alert\@head.cfa.harvard.edu";
-    #open MAIL, "|nomailx -s BRIT brad\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s BRIT sot_yellow_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s BRIT sot_red_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s BRIT brad\@head.cfa.harvard.edu";
     #open MAIL, "|mail brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     open FILE, $afile;
@@ -1144,7 +1144,7 @@ sub send_brit_alert {
   }
 }
 
-sub send_fmt_alert {
+sub #send_fmt_alert {
   # send e-mail alert if FMT5
   my $obstime = ${$hash{CCSDSTMF}}[0];
   if (! time_curr($obstime)) {
@@ -1157,6 +1157,7 @@ sub send_fmt_alert {
     open FILE, ">$afile";
     #print FILE "  THIS IS ONLY A TEST !!!! \n\n"; #debug
     print FILE "Chandra realtime telemetry shows FMT$_[0] at $obt UT\n\n";
+    print FILE "\nTelecon on 1165\# now.\n";
     # try to figure out next comm passes
     open COMS, $comfile;
     my @time = split(":", $obt);
@@ -1192,7 +1193,7 @@ sub send_fmt_alert {
     close FILE;
 
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu rac\@head.cfa.harvard.edu";
-    open MAIL, "|nomailx -s FMT5 sot_safemode_alert\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s 'FMT5: telecon 1165\# now' sot_safemode_alert\@head.cfa.harvard.edu";
     #open MAIL, "|mail brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     open FILE, $afile;
@@ -1204,7 +1205,7 @@ sub send_fmt_alert {
   }
 }
 
-sub send_gyro_alert {
+sub #send_gyro_alert {
   # send e-mail alert if AIRU1Q1I gt 200 mAmp
   my $obstime = ${$hash{CCSDSTMF}}[0];
   if (! time_curr($obstime)) {
@@ -1253,9 +1254,9 @@ sub send_gyro_alert {
     #print FILE "\n TEST   TEST   TEST   TEST   TEST   TEST   TEST\n"; #debug
     close FILE;
 
-    #open MAIL, "|nomailx -s AIRU1G1I brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu 6172573986\@mobile.mycingular.com";
-    open MAIL, "|nomailx -s AIRU1G1I brad\@head.cfa.harvard.edu 6172573986\@mobile.mycingular.com";
-    #open MAIL, "|nomailx -s AIRU1G1I sot_red_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s AIRU1G1I brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu 6172573986\@mobile.mycingular.com";
+    open MAIL, "|mailx -s AIRU1G1I brad\@head.cfa.harvard.edu 6172573986\@mobile.mycingular.com";
+    #open MAIL, "|mailx -s AIRU1G1I sot_red_alert\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
@@ -1265,7 +1266,7 @@ sub send_gyro_alert {
   }
 }
 
-sub send_ctxpwr_alert {
+sub #send_ctxpwr_alert {
   my $obstime = ${$hash{CTXAPWR}}[0];
   if (! time_curr($obstime)) {
     return;
@@ -1279,8 +1280,8 @@ sub send_ctxpwr_alert {
     print FILE "This message sent to sot_yellow_alert\n"; #debug
     close FILE;
 
-    #open MAIL, "|nomailx -s CTXPWR brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    open MAIL, "|nomailx -s CTXPWR sot_yellow_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s CTXPWR brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s CTXPWR sot_yellow_alert\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
@@ -1290,7 +1291,7 @@ sub send_ctxpwr_alert {
   }
 }
 
-sub send_ctxv_alert {
+sub #send_ctxv_alert {
   my $obstime = ${$hash{CTXAV}}[0];
   if (! time_curr($obstime)) {
     return;
@@ -1304,8 +1305,8 @@ sub send_ctxv_alert {
     print FILE "This message sent to sot_yellow_alert\n"; #debug
     close FILE;
 
-    #open MAIL, "|nomailx -s CTXV brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    open MAIL, "|nomailx -s CTXV sot_yellow_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s CTXV brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s CTXV sot_yellow_alert\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
@@ -1315,7 +1316,7 @@ sub send_ctxv_alert {
   }
 }
 
-sub send_hkp27v_alert {
+sub #send_hkp27v_alert {
   my $obstime = ${$hash{"5HSE202"}}[0];
   #print "#send_hkp27v $obstime\n";
   if (! time_curr($obstime)) {
@@ -1330,8 +1331,8 @@ sub send_hkp27v_alert {
     #print FILE "This message sent to sot_lead,fot,emartin\n"; #debug
     close FILE;
 
-    #open MAIL, "|nomailx -s HKP27V sot_yellow_alert\@head.cfa.harvard.edu";
-    open MAIL, "|nomailx -s HKP27V juda plucinsk aldcroft wap swolk das emk nadams jdepasq fot emartin 8006724485\@archwireless.net brad";
+    #open MAIL, "|mailx -s HKP27V sot_yellow_alert\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s HKP27V juda plucinsk aldcroft wap swolk das emk nadams jdepasq fot emartin 8006724485\@archwireless.net brad";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
@@ -1341,7 +1342,7 @@ sub send_hkp27v_alert {
   }
 }
 
-sub send_pline03t_alert {
+sub #send_pline03t_alert {
   my $obstime = ${$hash{"PLINE03T"}}[0];
   if (! time_curr($obstime)) {
     return;
@@ -1355,8 +1356,8 @@ sub send_pline03t_alert {
     print FILE "This message sent to sot_yellow_alert\n"; #debug
     close FILE;
 
-    #open MAIL, "|nomailx -s PLINE03T brad\@head.cfa.harvard.edu";
-    open MAIL, "|nomailx -s PLINE03T sot_yellow_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s PLINE03T brad\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s PLINE03T sot_yellow_alert\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
@@ -1366,7 +1367,7 @@ sub send_pline03t_alert {
   }
 }
 
-sub send_pline04t_alert {
+sub #send_pline04t_alert {
   my $obstime = ${$hash{"PLINE04T"}}[0];
   if (! time_curr($obstime)) {
     return;
@@ -1380,8 +1381,8 @@ sub send_pline04t_alert {
     print FILE "This message sent to sot_yellow_alert\n"; #debug
     close FILE;
 
-    #open MAIL, "|nomailx -s PLINE04T brad\@head.cfa.harvard.edu";
-    open MAIL, "|nomailx -s PLINE04T sot_yellow_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s PLINE04T brad\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s PLINE04T sot_yellow_alert\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;

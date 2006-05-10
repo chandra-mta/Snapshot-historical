@@ -16,7 +16,7 @@ WWW  = snapshot_hlp.html
 #sed -e "s/.\/snaps2.par/\/home\/mta\/Snap\/snaps2.par/" check_state.pm > check_state_alerts.pm
 #cp snaps2.par snaps2_alerts.par
 #cp snaps2.par snaps2_noalerts.par
-# sed -e "s/send_/#send_" check_state_alerts.pm > check_state_noalerts.pm
+# sed -e "s/send_/#send_/" check_state_alerts.pm > check_state_noalerts.pm
 
 install:
 ifdef BIN
