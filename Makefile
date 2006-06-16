@@ -13,10 +13,11 @@ DOC  = ReadMe
 PERLLIB = check_state.pm check_state_alerts.pm check_state_force_alert.pm check_state_noalerts.pm comps.pm snap.pm snap_format.pm
 WWW  = snapshot_hlp.html
 
-#sed -e "s/.\/snaps2.par/\/home\/mta\/Snap\/snaps2.par/" check_state.pm > check_state_alerts.pm
+#sed -e "s/.\/snaps2.par/\/home\/mta\/Snap\/snaps2.par/" check_state.pm >! check_state_alerts.pm
 #cp snaps2.par snaps2_alerts.par
 #cp snaps2.par snaps2_noalerts.par
-# sed -e "s/send_/#send_/" check_state_alerts.pm > check_state_noalerts.pm
+# sed -e "s/send_/#send_/" check_state_alerts.pm >! tmp_check_state_noalerts.pm
+# sed -e "s/sub #send_/sub send_/" tmp_check_state_noalerts.pm >! check_state_noalerts.pm
 
 install:
 ifdef BIN

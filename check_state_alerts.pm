@@ -452,6 +452,52 @@ sub aofstar {
   return $color;
 }
       
+sub aocpestl {
+  my $val = $_[0];
+  my $afile = "/home/mta/Snap/.cpealert";
+  my $tfile = "/home/mta/Snap/.cpewait";
+  $color = $YLW;
+  if ($val eq 'NORM') {
+    $color = $GRN;
+    if (-s $afile) {
+      my $tnum = 3;  # but, wait a little while before deleting lock
+      if (-s $tfile) {
+        open (TF, "<$tfile");
+        $tnum = <TF>;
+        close TF;
+      }
+      $tnum--;
+      if ($tnum == 0) {
+        unlink $afile;
+      }
+      if ($tnum > 0) {
+        open (TF, ">$tfile");
+        print TF $tnum;
+        close TF;
+      }
+    }
+  }
+  if ($val eq 'SAFE') {
+    $color = $RED;
+    my $tnum = 0;  # but, wait a little while before waking people up
+    if (-s $tfile) {
+      open (TF, "<$tfile");
+      $tnum = <TF>;
+      close TF;
+    }
+    $tnum++;
+    if ($tnum == 3) {
+      send_cpe_alert($val);
+    }
+    if ($tnum <= 3) {
+      open (TF, ">$tfile");
+      print TF $tnum;
+      close TF;
+    }
+  }
+  return $color;
+}
+      
 sub fmt {
     my $val = $_[0];
     my $test = chop($_[0]);
@@ -1134,6 +1180,66 @@ sub send_brit_alert {
     #open MAIL, "|mailx -s BRIT sot_red_alert\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s BRIT brad\@head.cfa.harvard.edu";
     #open MAIL, "|mail brad\@head.cfa.harvard.edu";
+    #open MAIL, "|more"; #debug
+    open FILE, $afile;
+    while (<FILE>) {
+      print MAIL $_;
+    }
+    close FILE;
+    close MAIL;
+  }
+}
+
+sub send_cpe_alert {
+  # send e-mail alert if CPESTAT SAFE
+  my $obstime = ${$hash{AOCPESTL}}[0];
+  print "$obstime\n"; #debugbrit
+  if (! time_curr($obstime)) {
+    return;
+  }
+  my $afile = "/home/mta/Snap/.cpealert";
+  my $comfile = "/pool14/chandra/DSN.schedule";
+  if (-s $afile) {
+  } else {
+    open FILE, ">$afile";
+    print FILE "Chandra realtime telemetry shows AOCPESTL (CPE Status) $_[0] at $obt UT\n\n";
+    # try to figure out next comm passes
+    open COMS, $comfile;
+    my @time = split(":", $obt);
+    # use decimal day to allow comms spanning two days
+    my $day = $time[1] + ($time[2]/24) + ($time[3]/1440);
+    while (<COMS>) {
+      my @line = split(" ", $_);
+      #print FILE "$time[0] $time[1] $time[2] $time[3]\n"; # debug
+      #print FILE "$line[0] $line[4] $line[6] $line[7]\n"; # debug
+      if ($line[0] < $time[0]) {next;}
+      if ($line[4] < $time[1]) {next;}
+      #if ($line[7] < ("$time[2]"."$time[3]")) {next;}
+      if ($line[3] < $day) {next;}
+      my @next = split(/\./, $line[1]);
+      print FILE "Current pass:  $line[0]:$next[0]:$line[6] to $line[7]\n";
+      print FILE "Next passes:   ";
+      @line = split(" ", <COMS>);
+      @next = split(/\./, $line[1]);
+      print FILE "$line[0]:$next[0]:$line[6] to $line[7]\n";
+      @line = split(" ", <COMS>);
+      @next = split(/\./, $line[1]);
+      print FILE "               $line[0]:$next[0]:$line[6] to $line[7]\n";
+      @line = split(" ", <COMS>);
+      @next = split(/\./, $line[1]);
+      print FILE "               $line[0]:$next[0]:$line[6] to $line[7]\n";
+      last;
+    }
+      
+    print FILE "\nSnapshot:\n";
+    print FILE "http://cxc.harvard.edu/cgi-gen/mta/Snap/snap.cgi\n"; #debug
+    #print FILE "http://cxc.harvard.edu/mta_days/MIRROR/Snap/snap.cgi\n"; #debug
+    print FILE "This message sent to brad\n"; #debug
+    #print FILE "This message sent to sot_safemode_alert\n"; #debug
+    close FILE;
+
+    #open MAIL, "|mailx -s CPEstat sot_safemode_alert\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s CPEstat brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     open FILE, $afile;
     while (<FILE>) {
