@@ -223,7 +223,7 @@ sub check_comm {
       if ($tstart > $gmt_sec_now) {last;}
       if ($line[12] eq "PASS" && $tstop-$gmt_sec_now >= 300 && $gmt_sec_now-$tstart >= 600) {
         open(OUT,">$lockfile");
-        print OUT "Psicorp -> Rhodes - no real-time data flowing.\n";
+        print OUT "Gamera -> Rhodes - no real-time data flowing.\n";
         print OUT "Comm expected:\n";
         print OUT $inline;
         print OUT "\n";
