@@ -82,7 +82,7 @@ if (! $aos) {
   if (-s $check_comm_file && -s $check_comm_file_bu && ! -s $check_comm_sent) {
     `cp $check_comm_file $check_comm_sent`;
     #`cat $check_comm_file | mailx -s 'check_comm' brad swolk`;
-    `cat $check_comm_file | mailx -s 'check_comm' sot_lead brad jnichols pmendygral`;
+    `cat $check_comm_file | mailx -s 'check_comm' sot_lead brad jnichols`;
   } # if (-s $check_comm_file && -s $check_comm_file_bu && 
   # give backup control of alerts, in case it sees data
   if (! -e "/home/mta/Snap/.alerts_bu") {
@@ -110,7 +110,7 @@ if (-s $check_comm_file) {
 #if (! -s $check_comm_file && ! -s $check_comm_file_bu && -s $check_comm_sent) {
 if (! -s $check_comm_file && -s $check_comm_sent) {
   #open MAIL, "| mailx -s 'check_comm' brad swolk";
-  open MAIL, "| mailx -s 'check_comm' sot_lead brad jnichols pmendygral";
+  open MAIL, "| mailx -s 'check_comm' sot_lead brad jnichols";
   print MAIL "Real-time data flow has resumed.\n";
   close MAIL;
   unlink $check_comm_sent;
