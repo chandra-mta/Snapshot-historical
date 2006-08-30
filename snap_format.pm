@@ -321,7 +321,7 @@ if ((${$h{"5EHSE106"}}[1]) % 2 == 1) {
                  ${$h{"5HSE202"}}[3], ${$h{"5HSE202"}}[1];
 } else {
   $s .= sprintf "<font color=%s>  EPH 27I  %9.2f</font></a>", 
-                 ${$h{"5HSE202"}}[3], ${$h{"5HSE202"}}[1];
+                 ${$h{"5HSE202"}}[3], ${$h{"5HSE202"}}[1]*20.1/31.05;
 } # if ((${$h{"5EHSE106"}}[3]+1) % 2 == 0) {
 $s .= sprintf "%3s<font color=%s>M Unload %6s</font></a>\n", 
                " ",${$h{AOUNLOAD}}[3], ${$h{AOUNLOAD}}[1];
