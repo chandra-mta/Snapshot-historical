@@ -133,7 +133,8 @@ sub get_curr {
   
   # read the ACE flux
   
-  $fluf = "/proj/rac/ops/ACE/fluace.dat";
+  #$fluf = "/proj/rac/ops/ACE/fluace.dat";
+  $fluf = "/data/mta4/space_weather/ACE/fluace.dat";
   if (open FF, $fluf) {
       @ff = <FF>;
       @fl = split ' ',$ff[-3];
