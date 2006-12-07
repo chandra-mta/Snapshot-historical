@@ -81,8 +81,8 @@ if (! $aos) {
   # if no data on primary or backup, send alert
   if (-s $check_comm_file && -s $check_comm_file_bu && ! -s $check_comm_sent) {
     `cp $check_comm_file $check_comm_sent`;
-    #`cat $check_comm_file | mailx -s 'check_comm' brad swolk`;
-    `cat $check_comm_file | mailx -s 'check_comm' sot_lead brad jnichols`;
+    #`cat $check_comm_file | mailx -s 'check_comm' brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu`;
+    `cat $check_comm_file | mailx -s 'check_comm' sot_lead\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu jnichols\@head.cfa.harvard.edu`;
   } # if (-s $check_comm_file && -s $check_comm_file_bu && 
   # give backup control of alerts, in case it sees data
   if (! -e "/home/mta/Snap/.alerts_bu") {
@@ -101,7 +101,7 @@ if (-e "/home/mta/Snap/.alerts_bu") {
 } # if (-e "/home/mta/Snap/.alerts_bu") {
 # start check_comm all clear e-mails
 if (-s $check_comm_file) {
-  open MAIL, "| mailx -s 'check_comm' brad";
+  open MAIL, "| mailx -s 'check_comm' brad\@head.cfa.harvard.edu";
   print MAIL "Rhodes data flow resumed.\n";
   close MAIL;
   unlink $check_comm_file;
@@ -109,8 +109,8 @@ if (-s $check_comm_file) {
 
 #if (! -s $check_comm_file && ! -s $check_comm_file_bu && -s $check_comm_sent) {
 if (! -s $check_comm_file && -s $check_comm_sent) {
-  #open MAIL, "| mailx -s 'check_comm' brad swolk";
-  open MAIL, "| mailx -s 'check_comm' sot_lead brad jnichols";
+  #open MAIL, "| mailx -s 'check_comm' brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+  open MAIL, "| mailx -s 'check_comm' sot_lead\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu jnichols\@head.cfa.harvard.edu";
   print MAIL "Real-time data flow has resumed.\n";
   close MAIL;
   unlink $check_comm_sent;

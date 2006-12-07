@@ -232,8 +232,8 @@ sub check_comm {
         @lasttl=`/usr/ucb/ls -lt *tl`;
         print OUT "$lasttl[0]\n";
         close OUT;
-        #`cat $lockfile | mailx -s"check_comm" brad swolk`;
-        `cat $lockfile | mailx -s"check_comm" brad`;
+        #`cat $lockfile | mailx -s"check_comm" brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu`;
+        `cat $lockfile | mailx -s"check_comm" brad\@head.cfa.harvard.edu`;
         # rewrite in nicer format for sot_lead
         unlink $lockfile;
         open(OUT,">$lockfile");
@@ -246,8 +246,8 @@ sub check_comm {
         @tl=split(/\s+/,$lasttl[0]);
         print OUT "$tl[4] $tl[5] $tl[6] $tl[7]\n";
         close OUT;
-        #`cat $lockfile | mailx -s"check_comm" brad swolk`;
-        #`cat $lockfile | mailx -s"check_comm" brad`;
+        #`cat $lockfile | mailx -s"check_comm" brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu`;
+        #`cat $lockfile | mailx -s"check_comm" brad\@head.cfa.harvard.edu`;
       } #if ($tstop-$gmt_sec_now >= 300 && $gmt_sec_now-$tstart >= 300) {
     } # while (<SCH>) {
     close SCH;

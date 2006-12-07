@@ -992,7 +992,7 @@ sub send_107_alert {
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
     #open MAIL, "|mail sot_yellow_alert\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s SCS107 sot_red_alert\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s SCS107 sot_red_alert\@head.cfa.harvard.edu operators";
+    open MAIL, "|mailx -s SCS107 sot_red_alert\@head.cfa.harvard.edu operators\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s SCS107 brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     open FILE, $afile;
@@ -1054,7 +1054,7 @@ sub send_nsun_alert {
     #open MAIL, "|mailx -s NSUN brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
     open MAIL, "|mailx -s NSUN sot_yellow_alert\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s NSUN sot_red_alert\@head.cfa.harvard.edu";
-    #open MAIL, "|mailx -s NSUN sot_red_alert\@head.cfa.harvard.edu operators";
+    #open MAIL, "|mailx -s NSUN sot_red_alert\@head.cfa.harvard.edu operators\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     open FILE, $afile;
     while (<FILE>) {
@@ -1111,7 +1111,7 @@ sub send_hrc_shld_alert {
 
     #open MAIL, "|mailx -s 'HRC SHIELD' brad\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s 'HRC SHIELD' brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s 'HRC SHIELD' sot_lead\@head.cfa.harvard.edu brad";
+    open MAIL, "|mailx -s 'HRC SHIELD' sot_lead\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
@@ -1438,7 +1438,7 @@ sub send_hkp27v_alert {
     close FILE;
 
     #open MAIL, "|mailx -s HKP27V sot_yellow_alert\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s HKP27V juda plucinsk aldcroft wap swolk das emk nadams jdepasq fot emartin 8006724485\@archwireless.net brad";
+    open MAIL, "|mailx -s HKP27V juda\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu aldcroft\@head.cfa.harvard.edu wap\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu das\@head.cfa.harvard.edu emk\@head.cfa.harvard.edu nadams\@head.cfa.harvard.edu depasq\@head.cfa.harvard.edu fot\@head.cfa.harvard.edu emartin\@head.cfa.harvard.edu 8006724485\@archwireless.net brad\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
