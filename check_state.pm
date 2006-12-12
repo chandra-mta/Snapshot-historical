@@ -1263,7 +1263,7 @@ sub send_fmt_alert {
     open FILE, ">$afile";
     #print FILE "  THIS IS ONLY A TEST !!!! \n\n"; #debug
     print FILE "Chandra realtime telemetry shows FMT$_[0] at $obt UT\n\n";
-    print FILE "\nTelecon on 1165\# now.\n";
+    print FILE "\nTelecon on 405-244-5060 1165\# now.\n";
     # try to figure out next comm passes
     open COMS, $comfile;
     my @time = split(":", $obt);
