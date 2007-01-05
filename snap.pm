@@ -199,30 +199,33 @@ sub check_comm {
   # actually this gets called only if data is not flowing,
   #  so send alert if comm is scheduled
   my $lockfile = $_[0];
-  my $schedule = '/pool14/chandra/DSN.schedule';
+  #my $schedule = '/pool14/chandra/DSN.schedule';
+  my $schedule = '/proj/rac/ops/ephem/dsn_summary.dat';
   #my $schedule = 'DSN.test';
   if (! -s $lockfile) { # if $lockfile already exists, do nothing
     $gmt_sec_now = time_now();
     #print "$gmt_sec_now\n"; #debug
     open(SCH,"<$schedule") || print "Can not open $schedule\n";
+    <SCH>;
+    <SCH>;
     while ($inline=<SCH>) {
       @line=split(/\s+/,$inline);
-      $tstart=($line[0]-1998)*31536000+($line[1]*86400)-86400;
-      $tstop=($line[2]-1998)*31536000+($line[3]*86400)-86400;
+      $tstart=($line[10]-1998)*31536000+($line[11]*86400)-86400;
+      $tstop=($line[12]-1998)*31536000+($line[13]*86400)-86400;
       $leap_year=2000;
-      while ($line[0] > $leap_year) {
+      while ($line[10] > $leap_year) {
         $tstart+=86400;
         $leap_year+=4;
-      } #while ($line[0] > $leap_year) {
+      } #while ($line[10] > $leap_year) {
       $leap_year=2000;
-      while ($line[2] > $leap_year) {
+      while ($line[12] > $leap_year) {
         $tstop+=86400;
         $leap_year+=4;
-      } #while ($line[2] > $leap_year) {
+      } #while ($line[12] > $leap_year) {
       #print "$tstart $tstop \n"; # debug
       if ($tstop < $gmt_sec_now) {next;}
       if ($tstart > $gmt_sec_now) {last;}
-      if ($line[12] eq "PASS" && $tstop-$gmt_sec_now >= 300 && $gmt_sec_now-$tstart >= 600) {
+      if ($tstop-$gmt_sec_now >= 300 && $gmt_sec_now-$tstart >= 600) {
         open(OUT,">$lockfile");
         print OUT "Gamera -> Rhodes - no real-time data flowing.\n";
         print OUT "Comm expected:\n";
@@ -239,8 +242,8 @@ sub check_comm {
         open(OUT,">$lockfile");
         print OUT "Real-time data expected but not received.\n";
         print OUT "Comm expected:\n";
-        print OUT "$line[0] $line[4] $line[6] - $line[7] UT ";
-        print OUT "$line[18] $line[19] $line[20] $line[21] $line[22]\n";
+        print OUT "$line[10] $line[0] UT ";
+        print OUT "$line[5] $line[6] $line[7] $line[8] $line[9]\n";
         print OUT "\n";
         print OUT "Last tracelog update (ET):\n";
         @tl=split(/\s+/,$lasttl[0]);
