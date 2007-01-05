@@ -392,15 +392,15 @@ sub scs107 {
         $tnum++;
         if ($tnum == 3) {
           send_107_alert($val);
-          if (${$hash{"3TSCPOS"}}[1] > -99000) {
-            send_sim_unsafe_alert(${$hash{"3TSCPOS"}}[1]);
-          } # if (${$hash{"3TSCPOS"}}[1] > -99000) {
         }
         if ($tnum <= 3) {
           open (TF, ">$tfile");
           print TF $tnum;
           close TF;
         }
+        if ($tnum >= 3 && $val eq 'DISA' && ${$hash{"3TSCPOS"}}[1] > -99000) {
+          send_sim_unsafe_alert(${$hash{"3TSCPOS"}}[1]);
+        } # if (${$hash{"3TSCPOS"}}[1] > -99000) {
       }
     } #if (${$hash{COTLRDSF}}[1] eq 'EPS') {
     return $color;
@@ -943,7 +943,8 @@ sub send_107_alert {
   }
   #my $afile = "$work_dir/.scs107alert";
   my $afile = "/home/mta/Snap/.scs107alert";
-  my $comfile = "/pool14/chandra/DSN.schedule";
+  #my $comfile = "/pool14/chandra/DSN.schedule";
+  my $comfile = "/proj/rac/ops/ephem/dsn_summary.dat";
   if (-s $afile) {
   } else {
     open FILE, ">$afile";
@@ -952,6 +953,8 @@ sub send_107_alert {
     print FILE "Chandra realtime telemetry shows SCS107 $_[0] at $obt UT\n\n";
     # try to figure out next comm passes
     open COMS, $comfile;
+    <COMS>;
+    <COMS>;
     my @time = split(":", $obt);
     # use decimal day to allow comms spanning two days
     my $day = $time[1] + ($time[2]/24) + ($time[3]/1440);
@@ -959,22 +962,22 @@ sub send_107_alert {
       my @line = split(" ", $_);
       #print FILE "$time[0] $time[1] $time[2] $time[3]\n"; # debug
       #print FILE "$line[0] $line[4] $line[6] $line[7]\n"; # debug
-      if ($line[0] < $time[0]) {next;}
-      if ($line[4] < $time[1]) {next;}
+      if ($line[10] < $time[0]) {next;}
+      if ($line[14] < $time[1]) {next;}
       #if ($line[7] < ("$time[2]"."$time[3]")) {next;}
-      if ($line[3] < $day) {next;}
-      my @next = split(/\./, $line[1]);
-      print FILE "Current pass:  $line[0]:$next[0]:$line[6] to $line[7]\n";
+      if ($line[13] < $day) {next;}
+      my @next = split(/\./, $line[11]);
+      print FILE "Current pass:  $line[10]:$line[0]\n";
       print FILE "Next passes:   ";
       @line = split(" ", <COMS>);
-      @next = split(/\./, $line[1]);
-      print FILE "$line[0]:$next[0]:$line[6] to $line[7]\n";
+      @next = split(/\./, $line[11]);
+      print FILE "$line[10]:$line[0]\n";
       @line = split(" ", <COMS>);
-      @next = split(/\./, $line[1]);
-      print FILE "               $line[0]:$next[0]:$line[6] to $line[7]\n";
+      @next = split(/\./, $line[11]);
+      print FILE "               $line[10]:$line[0]\n";
       @line = split(" ", <COMS>);
-      @next = split(/\./, $line[1]);
-      print FILE "               $line[0]:$next[0]:$line[6] to $line[7]\n";
+      @next = split(/\./, $line[11]);
+      print FILE "               $line[10]:$line[0]\n";
       last;
     }
       
@@ -1082,8 +1085,8 @@ sub send_sim_unsafe_alert {
     print FILE "This message sent to sot_yellow_alert\n"; #debug
     close FILE;
 
-    #open MAIL, "|mailx -s SIM_UNSAFE! brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s SIM_UNSAFE! sot_yellow_alert\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s SIM_UNSAFE! brad\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s SIM_UNSAFE! sot_yellow_alert\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
