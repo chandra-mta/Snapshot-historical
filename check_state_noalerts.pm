@@ -507,7 +507,7 @@ sub fmt {
     if ($test == 3 || $test == 4 || $test == 6) {$color = $YLW;}
     if ($test == 5) {
       $color = $RED;
-      #send_fmt_alert(split("_", $val));
+      #send_fmt_alert(split("_", $test));
     }
     return $color;
 }
@@ -1326,7 +1326,7 @@ sub send_gyro_alert {
   } else {
     open FILE, ">$afile";
     #print FILE "\n TEST   TEST   TEST   TEST   TEST   TEST   TEST\n"; #debug
-    print FILE "Chandra realtime telemetry shows AIRU1G1I %f6.2 mAmp at %s UT\n\n", $_[0], $obt;
+    printf FILE "Chandra realtime telemetry shows AIRU1G1I %6.2f mAmp at %s UT\n\n", $_[0], $obt;
     # try to figure out next comm passes
     open COMS, $comfile;
     my @time = split(":", $obt);
