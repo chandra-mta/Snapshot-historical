@@ -225,7 +225,7 @@ sub check_comm {
       #print "$tstart $tstop \n"; # debug
       if ($tstop < $gmt_sec_now) {next;}
       if ($tstart > $gmt_sec_now) {last;}
-      if ($tstop-$gmt_sec_now >= 300 && $gmt_sec_now-$tstart >= 600) {
+      if ($tstop-$gmt_sec_now >= 300 && $gmt_sec_now-$tstart >= 2400) {
         open(OUT,">$lockfile");
         print OUT "Gamera -> Rhodes - no real-time data flowing.\n";
         print OUT "Comm expected:\n";
@@ -240,7 +240,7 @@ sub check_comm {
         # rewrite in nicer format for sot_lead
         unlink $lockfile;
         open(OUT,">$lockfile");
-        print OUT "Real-time data expected but not received.\n";
+        print OUT "Real-time data expected but not received for 40 minutes.\n";
         print OUT "Comm expected:\n";
         print OUT "$line[10] $line[0] UT ";
         print OUT "$line[5] $line[6] $line[7] $line[8] $line[9]\n";
