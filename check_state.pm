@@ -1302,7 +1302,7 @@ sub send_fmt_alert {
     close FILE;
 
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu rac\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s 'FMT5: telecon 1165\# now' sot_safemode_alert\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s 'FMT5: telecon 111165\# now' sot_safemode_alert\@head.cfa.harvard.edu";
     #open MAIL, "|mail brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     open FILE, $afile;
