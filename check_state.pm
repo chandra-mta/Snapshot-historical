@@ -216,7 +216,7 @@ sub pcadmode {
         close TF;
       }
       $tnum++;
-      if ($tnum == 2) {
+      if ($tnum == 3) {
         send_nsun_alert($val);
       }
       if ($tnum <= 1) {
@@ -925,7 +925,7 @@ sub pline04t {
     if ($tnum == 3) {
       send_pline04t_alert($val);
     }
-    if ($tnum <= 1) {
+    if ($tnum <= 3) {
       open (TF, ">$tfile");
       print TF $tnum;
       close TF;
@@ -934,6 +934,118 @@ sub pline04t {
   } #if ($val < 42.5) {
   return $color;
 }
+
+sub aacccdpt {
+  my $val = $_[0];
+  my $afile = "/home/mta/Snap/.aacccdptalert";
+  my $tfile = "/home/mta/Snap/.aacccdptwait";
+  $color = $BLU;
+  if ($val < 0) {
+    $color = $GRN;
+    if (-s $afile) {
+      my $tnum = 3;  # but, wait a little while before deleting lock
+      if (-s $tfile) {
+        open (TF, "<$tfile");
+        $tnum = <TF>;
+        close TF;
+      }
+      $tnum--;
+      if ($tnum == 0) {
+        unlink $afile;
+      }
+      if ($tnum > 0) {
+        open (TF, ">$tfile");
+        print TF $tnum;
+        close TF;
+      }
+    }
+  } # if ($val < 0) {
+  if ($val > -18.3 || $val < -21.5) {
+    $color = $YLW;
+    my $tnum = 0;  # but, wait a little while before waking people up
+    if (-s $tfile) {
+      open (TF, "<$tfile");
+      $tnum = <TF>;
+      close TF;
+    }
+    $tnum++;
+    if ($tnum == 3) {
+      send_aacccdpt_yellow_alert($val);
+    }
+    if ($tnum <= 3) {
+      open (TF, ">$tfile");
+      print TF $tnum;
+      close TF;
+    }
+  } #if ($val > -18.3) {
+  if ($val >= 0) {
+    $color = $RED;
+    my $tnum = 0;  # but, wait a little while before waking people up
+    if (-s $tfile) {
+      open (TF, "<$tfile");
+      $tnum = <TF>;
+      close TF;
+    }
+    $tnum++;
+    if ($tnum == 3) {
+      send_aacccdpt_red_alert($val);
+    }
+    if ($tnum <= 3) {
+      open (TF, ">$tfile");
+      print TF $tnum;
+      close TF;
+    }
+  } #if ($val >=0 ) {
+  return $color;
+}
+
+
+sub ldrtno {
+  my $val = $_[0];
+  my $afile = "/home/mta/Snap/.ldrtnoalert";
+  my $tfile = "/home/mta/Snap/.ldrtnowait";
+  $color = $BLU;
+  if ($val > 0) {
+    $color = $GRN;
+    if (-s $afile) {
+      my $tnum = 3;  # but, wait a little while before deleting lock
+      if (-s $tfile) {
+        open (TF, "<$tfile");
+        $tnum = <TF>;
+        close TF;
+      }
+      $tnum--;
+      if ($tnum == 0) {
+        unlink $afile;
+      }
+      if ($tnum > 0) {
+        open (TF, ">$tfile");
+        print TF $tnum;
+        close TF;
+      }
+    }
+  } # if ($val > 0) {
+  if ($val <= 0) {
+    $color = $RED;
+    my $tnum = 0;  # but, wait a little while before waking people up
+    if (-s $tfile) {
+      open (TF, "<$tfile");
+      $tnum = <TF>;
+      close TF;
+    }
+    $tnum++;
+    if ($tnum == 3) {
+      send_ldrtno_alert($val);
+    }
+    if ($tnum <= 3) {
+      open (TF, ">$tfile");
+      print TF $tnum;
+      close TF;
+    }
+  } #if ($val < 42.5) {
+  return $color;
+}
+
 
 sub send_107_alert {
   # send e-mail alert if SCS107 DISA
@@ -1048,15 +1160,15 @@ sub send_nsun_alert {
       
     print FILE "\nSnapshot:\n";
     print FILE "http://cxc.harvard.edu/cgi-gen/mta/Snap/snap.cgi\n"; #debug
-    print FILE "This message sent to sot_yellow_alert\n"; #debug
-    #print FILE "This message sent to sot_red_alert\n"; #debug
+    #print FILE "This message sent to sot_yellow_alert\n"; #debug
+    print FILE "This message sent to sot_red_alert\n"; #debug
     #print FILE "This message sent to brad swolk\n"; #debug
     #print FILE "\n TEST   TEST   TEST   TEST   TEST   TEST   TEST\n"; #debug
     close FILE;
 
     #open MAIL, "|mailx -s NSUN brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s NSUN sot_yellow_alert\@head.cfa.harvard.edu";
-    #open MAIL, "|mailx -s NSUN sot_red_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s NSUN sot_yellow_alert\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s NSUN sot_red_alert\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s NSUN sot_red_alert\@head.cfa.harvard.edu operators\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     open FILE, $afile;
@@ -1492,6 +1604,83 @@ sub send_pline04t_alert {
 
     #open MAIL, "|mailx -s PLINE04T brad\@head.cfa.harvard.edu";
     open MAIL, "|mailx -s PLINE04T sot_yellow_alert\@head.cfa.harvard.edu";
+    open FILE, $afile;
+    while (<FILE>) {
+      print MAIL $_;
+    }
+    close FILE;
+    close MAIL;
+  }
+}
+
+sub send_aacccdpt_yellow_alert {
+  my $obstime = ${$hash{"AACCCDPT"}}[0];
+  if (! time_curr($obstime)) {
+    return;
+  }
+  my $afile = "/home/mta/Snap/.aacccdptalert";
+  if (-s $afile) {
+  } else {
+    open FILE, ">$afile";
+    print FILE "Chandra realtime telemetry shows  AACCCDPT = $_[0] C at $obt UT\n";
+    print FILE "Limit > -21.5 C and < -18.3 C\n\n";
+    print FILE "This message sent to aspect_help,brad,swolk\n"; #debug
+    close FILE;
+
+    open MAIL, "|mailx -s AACCCDPT brad\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s PLINE04T aspect_help,brad,swolk";
+    open FILE, $afile;
+    while (<FILE>) {
+      print MAIL $_;
+    }
+    close FILE;
+    close MAIL;
+  }
+}
+
+sub send_aacccdpt_red_alert {
+  my $obstime = ${$hash{"AACCCDPT"}}[0];
+  if (! time_curr($obstime)) {
+    return;
+  }
+  my $afile = "/home/mta/Snap/.aacccdptalert";
+  if (-s $afile) {
+  } else {
+    open FILE, ">$afile";
+    print FILE "TEST\n";
+    print FILE "Chandra realtime telemetry shows  AACCCDPT = $_[0] C at $obt UT\n";
+    print FILE "Limit < 0 C\n\n";
+    print FILE "This message sent to sot_red_alert\n"; #debug
+    close FILE;
+
+    open MAIL, "|mailx -s AACCCDPT-test brad\@head.cfa.harvard.edu,swolk";
+    #open MAIL, "|mailx -s AACCCDPT sot_red_alert\@head.cfa.harvard.edu,aspect_help,6177214364\@vtext.com,8006724485\@archwireless.net";
+    open FILE, $afile;
+    while (<FILE>) {
+      print MAIL $_;
+    }
+    close FILE;
+    close MAIL;
+  }
+}
+
+sub send_ldrtno_alert {
+  my $obstime = ${$hash{"3LDRTNO"}}[0];
+  if (! time_curr($obstime)) {
+    return;
+  }
+  my $afile = "/home/mta/Snap/.ldrtnoalert";
+  if (-s $afile) {
+  } else {
+    open FILE, ">$afile";
+    print FILE "Chandra realtime telemetry shows  3LDRTNO = $_[0] F at $obt UT\n";
+    print FILE "SIM Last Detected Reference Tab Number = 0. Possible SEA reset.\n";
+    print FILE "Limit > 0\n\n";
+    print FILE "This message sent to sot_red_alert\n"; #debug
+    close FILE;
+
+    open MAIL, "|mailx -s 3LDRTNO brad\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s 3LDRTNO sot_red_alert\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
