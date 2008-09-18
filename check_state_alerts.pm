@@ -1627,8 +1627,8 @@ sub send_aacccdpt_yellow_alert {
     print FILE "This message sent to aspect_help,brad,swolk\n"; #debug
     close FILE;
 
-    open MAIL, "|mailx -s AACCCDPT brad\@head.cfa.harvard.edu";
-    #open MAIL, "|mailx -s PLINE04T aspect_help,brad,swolk";
+    #open MAIL, "|mailx -s AACCCDPT brad\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s AACCCDPT aspect_help,brad,swolk";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
@@ -1647,14 +1647,13 @@ sub send_aacccdpt_red_alert {
   if (-s $afile) {
   } else {
     open FILE, ">$afile";
-    print FILE "TEST\n";
     print FILE "Chandra realtime telemetry shows  AACCCDPT = $_[0] C at $obt UT\n";
     print FILE "Limit < 0 C\n\n";
     print FILE "This message sent to sot_red_alert\n"; #debug
     close FILE;
 
-    open MAIL, "|mailx -s AACCCDPT-test brad\@head.cfa.harvard.edu,swolk";
-    #open MAIL, "|mailx -s AACCCDPT sot_red_alert\@head.cfa.harvard.edu,aspect_help,6177214364\@vtext.com,8006724485\@archwireless.net";
+    #open MAIL, "|mailx -s AACCCDPT brad\@head.cfa.harvard.edu,swolk";
+    open MAIL, "|mailx -s AACCCDPT sot_red_alert\@head.cfa.harvard.edu,aspect_help,6177214364\@vtext.com,8006724485\@archwireless.net";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
@@ -1679,8 +1678,8 @@ sub send_ldrtno_alert {
     print FILE "This message sent to sot_red_alert\n"; #debug
     close FILE;
 
-    open MAIL, "|mailx -s 3LDRTNO brad\@head.cfa.harvard.edu";
-    #open MAIL, "|mailx -s 3LDRTNO sot_red_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s 3LDRTNO brad\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s 3LDRTNO sot_red_alert\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
