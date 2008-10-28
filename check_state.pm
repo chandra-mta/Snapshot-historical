@@ -219,7 +219,7 @@ sub pcadmode {
       if ($tnum == 3) {
         send_nsun_alert($val);
       }
-      if ($tnum <= 1) {
+      if ($tnum <= 3) {
         open (TF, ">$tfile");
         print TF $tnum;
         close TF;
@@ -378,7 +378,7 @@ sub scs107 {
           }
         }
       }
-      if (($val eq 'ACT' || $val eq 'DISA') && ${$hash{COSCS128S}}[1] eq 'INAC' && ${$hash{COSCS129S}}[1] eq 'INAC' && ${$hash{COSCS130S}}[1] eq 'INAC') {
+      if (($val eq 'ACT' || $val eq 'DISA') && ${$hash{COSCS128S}}[1] ne 'ACT' && ${$hash{COSCS129S}}[1] ne 'ACT' && ${$hash{COSCS130S}}[1] ne 'ACT') {
       #if ($val eq 'ACT' || $val eq 'DISA') {
       # add extra checks, rhodes is being shifty 08/12/03 bds
       #if ($val eq 'DISA') {
