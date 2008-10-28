@@ -101,7 +101,7 @@ if (-e "/home/mta/Snap/.alerts_bu") {
 } # if (-e "/home/mta/Snap/.alerts_bu") {
 # start check_comm all clear e-mails
 if (-s $check_comm_file) {
-  open MAIL, "| mailx -s 'check_comm' brad\@head.cfa.harvard.edu";
+  open MAIL, "| mailx -s 'check_comm' brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
   print MAIL "Rhodes data flow resumed.\n";
   close MAIL;
   unlink $check_comm_file;
@@ -118,6 +118,15 @@ if (! -s $check_comm_file && -s $check_comm_sent) {
 # end check_comm all clear e-mails
 
 `date > $lock`;
+#unlink "/home/mta/Snap/.britwait";
+#unlink "/home/mta/Snap/.cpewait";
+#unlink "/home/mta/Snap/.ctxvwait";
+#unlink "/home/mta/Snap/.hkp27vwait";
+#unlink "/home/mta/Snap/.hrcshldwait";
+#unlink "/home/mta/Snap/.nsunwait";
+#unlink "/home/mta/Snap/.pline03twait";
+#unlink "/home/mta/Snap/.pline04twait";
+#unlink "/home/mta/Snap/.scs107wait";
 
 my %h = get_data($work_dir, @ftype);
  
