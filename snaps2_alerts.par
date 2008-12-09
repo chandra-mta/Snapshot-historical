@@ -56,8 +56,10 @@ AOPCADMD	4	pcadmode
 4HPOSARO	4	hetg
 4LPOSBRO	4	letg
 E1300		4	e1300
-P4GM		4	p4gm
-P41GM		4	p41gm
+E150		4	e150
+2DETART		4	detart
+#P4GM		4	p4gm
+#P41GM		4	p41gm
 CCSDSTMF	4	fmt
 ACAFCT		4	imfunc
 AOFSTAR		4	aofstar

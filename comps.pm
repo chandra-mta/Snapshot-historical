@@ -97,6 +97,10 @@ sub do_comps {
       foreach (keys %eph_small) { $eph{$_} /= $eph_small{$_}*65.6 };
   }
 
+  # after turning off det A
+  #foreach (keys %eph_small) { $eph{$_} /= 1.17*65.6 };
+  #foreach (keys %eph_small) { $eph{$_} /= 1.17 };
+
   $h{GEOM} = [${$h{"5EHSE2"}}[0], $eph{GEOM}, ${$h{"5EHSE2"}}[2], ${$h{"5EHSE2"}}[3]];
   $h{P4GM}  = [${$h{"5EP00500"}}[0], $eph{P4GM}, ${$h{"5EP00500"}}[2], ${$h{"5EP00500"}}[3]];
   $h{P41GM} = [${$h{"5EP00764"}}[0], $eph{P41GM}, ${$h{"5EP00764"}}[2], ${$h{"5EP00764"}}[3]];

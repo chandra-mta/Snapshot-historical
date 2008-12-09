@@ -250,13 +250,46 @@ sub letg {
     return $color;
 }
 
+#sub e1300 {
+#    my $val = $_[0];
+#    my $radmon = ${$hash{CORADMEN}}[1];
+#    if ($radmon eq 'ENAB') {
+#      if ($val < 6.6) {$color = $GRN;}
+#      if ($val >= 6.6) {$color = $YLW;}
+#      if ($val >= 20.0) {$color = $RED;}
+#    } else {$color = $BLU;}
+#    return $color;
+#}
+
 sub e1300 {
     my $val = $_[0];
     my $radmon = ${$hash{CORADMEN}}[1];
     if ($radmon eq 'ENAB') {
-      if ($val < 6.6) {$color = $GRN;}
-      if ($val >= 6.6) {$color = $YLW;}
-      if ($val >= 20.0) {$color = $RED;}
+      if ($val < 333) {$color = $GRN;}
+      if ($val >= 333) {$color = $YLW;}
+      if ($val >= 1000) {$color = $RED;}
+    } else {$color = $BLU;}
+    return $color;
+}
+
+sub e150 {
+    my $val = $_[0];
+    my $radmon = ${$hash{CORADMEN}}[1];
+    if ($radmon eq 'ENAB') {
+      if ($val < 266666) {$color = $GRN;}
+      if ($val >= 266666) {$color = $YLW;}
+      if ($val >= 800000) {$color = $RED;}
+    } else {$color = $BLU;}
+    return $color;
+}
+
+sub detart {
+    my $val = $_[0];
+    my $radmon = ${$hash{CORADMEN}}[1];
+    if ($radmon eq 'ENAB') {
+      if ($val < 10) {$color = $GRN;}
+      if ($val >= 10) {$color = $YLW;}
+      if ($val >= 30.0) {$color = $RED;}
     } else {$color = $BLU;}
     return $color;
 }
