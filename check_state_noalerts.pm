@@ -439,6 +439,52 @@ sub scs107 {
     return $color;
 }
 
+sub pmtankp {
+  my $val = $_[0];
+  my $ayfile = "/home/mta/Snap/.ytankalert";
+  my $tyfile = "/home/mta/Snap/.ytankwait";
+  my $arfile = "/home/mta/Snap/.rtankalert";
+  my $trfile = "/home/mta/Snap/.rtankwait";
+  if ($val > 175) {unlink $trfile;}
+  $color = $YLW;
+  if ($val < 180 && $val >= 175) {
+    my $tnum = 0;  # but, wait a little while before waking people up
+    if (-s $tyfile) {
+      open (TF, "<$tyfile");
+      $tnum = <TF>;
+      close TF;
+    }
+    $tnum++;
+    if ($tnum == 3) {
+      ##send_tank_yellow($val);
+    }
+    if ($tnum <= 3) {
+      open (TF, ">$tyfile");
+      print TF $tnum;
+      close TF;
+    }
+  }
+  if ($val < 175) {
+    $color = $RED;
+    my $tnum = 0;  # but, wait a little while before waking people up
+    if (-s $trfile) {
+      open (TF, "<$trfile");
+      $tnum = <TF>;
+      close TF;
+    }
+    $tnum++;
+    if ($tnum == 3) {
+      ##send_tank_red($val);
+    }
+    if ($tnum <= 3) {
+      open (TF, ">$trfile");
+      print TF $tnum;
+      close TF;
+    }
+  }
+  return $color;
+}
+
 sub aofstar {
   my $val = $_[0];
   my $afile = "/home/mta/Snap/.britalert";
@@ -833,7 +879,7 @@ sub shldart {
   if ($val > 255 || ${$hash{CORADMEN}}[1] eq 'DISA') {
     $color = $BLU;
   }
-  if ($val < 245 && ${$hash{CORADMEN}}[1] eq 'ENAB') {
+  if ($val <  80 && ${$hash{CORADMEN}}[1] eq 'ENAB') {
     $color = $GRN;
     if (-s $afile) {
       my $tnum = 3;  # but, wait a little while before deleting lock
@@ -853,7 +899,7 @@ sub shldart {
       }
     }
   }
-  if ($val > 245 && ${$hash{CORADMEN}}[1] eq 'ENAB') {
+  if ($val >  80 && ${$hash{CORADMEN}}[1] eq 'ENAB') {
     $color = $YLW;
     my $tnum = 0;  # but, wait a little while before waking people up
     if (-s $tfile) {
@@ -1079,6 +1125,56 @@ sub ldrtno {
   return $color;
 }
 
+sub send_tank_red {
+  my $obstime = ${$hash{PMTANKP}}[0];
+  if (! time_curr($obstime)) {
+    return;
+  }
+  my $afile = "/home/mta/Snap/.rtankalert";
+  if (-s $afile) {
+  } else {
+    open FILE, ">$afile";
+    printf FILE "Chandra realtime telemetry shows PMTANKP %5.1f at $obt UT\n\n",$_[0];
+    print FILE "\nSnapshot:\n";
+    print FILE "http://cxc.harvard.edu/cgi-gen/mta/Snap/snap.cgi\n"; #debug
+    close FILE;
+    #open MAIL, "|mailx -s PMTANKP_test brad\@head.cfa.harvard.edu,swolk";
+    open MAIL, "|mailx -s PMTANKP sot_red_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|more"; #debug
+    open FILE, $afile;
+    while (<FILE>) {
+      print MAIL $_;
+    }
+    close FILE;
+    close MAIL;
+  }
+}
+
+sub send_tank_yellow {
+  my $obstime = ${$hash{PMTANKP}}[0];
+  if (! time_curr($obstime)) {
+    return;
+  }
+  my $afile = "/home/mta/Snap/.ytankalert";
+  if (-s $afile) {
+  } else {
+    open FILE, ">$afile";
+    print FILE " \n";
+    printf FILE "Chandra realtime telemetry shows PMTANKP %6.2f PSI at %s UT\n\n",$_[0],$obt;
+    print FILE "\nSnapshot:\n";
+    print FILE "http://cxc.harvard.edu/cgi-gen/mta/Snap/snap.cgi\n"; #debug
+    close FILE;
+    #open MAIL, "|mailx -s PMTANKP brad\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s PMTANKP sot_yellow_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|more"; #debug
+    open FILE, $afile;
+    while (<FILE>) {
+      print MAIL $_;
+    }
+    close FILE;
+    close MAIL;
+  }
+}
 
 sub send_107_alert {
   # send e-mail alert if SCS107 DISA
@@ -1259,7 +1355,8 @@ sub send_hrc_shld_alert {
 
     #open MAIL, "|mailx -s 'HRC SHIELD' brad\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s 'HRC SHIELD' brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s 'HRC SHIELD' sot_lead\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s 'HRC SHIELD' sot_lead\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s 'HRC SHIELD' sot_yellow_alert\@head.cfa.harvard.edu 6172573986\@mobile.mycingular.com";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
