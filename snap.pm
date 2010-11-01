@@ -72,6 +72,7 @@ sub set_status {
   #my $ref_time = time_now();
   my $ref_time = $inh{OBT}[0];
   foreach $key (keys(%inh)) {
+    if ($key eq "KP") {$stale_time = 3600;}
     if ($ref_time - $inh{$key}[0] > $stale_time) {
       $inh{"$key"}[2] = "S";
       $inh{"$key"}[3] = "#996677";
@@ -133,12 +134,12 @@ sub get_curr {
   
   # read the ACE flux
   
-  #$fluf = "/proj/rac/ops/ACE/fluace.dat";
-  $fluf = "/data/mta4/space_weather/ACE/fluace.dat";
+  $fluf = "/proj/rac/ops/ACE/fluace.dat";
+  #$fluf = "/data/mta4/space_weather/ACE/fluace.dat";
   if (open FF, $fluf) {
       @ff = <FF>;
       @fl = split ' ',$ff[-3];
-      #$fluxace = $fl[11];
+      $fluxace = $fl[11];
       close FF;
   } else { print STDERR "$fluf not found!\n" };
 
@@ -187,7 +188,9 @@ sub date2secs {
   my ($yr, $mo, $day, $time) = @_;
   my $hr = substr($time, 0, 2);
   my $mn = substr($time, 2, 2);
+  #print "test $time $mn $hr $day $mo $yr\n";
   return timegm(0, $mn, $hr, $day, $mo-1, $yr-1900) - $t1998;
+  return 1;
 }
 
 sub numerically { $a <=> $b };
@@ -235,12 +238,13 @@ sub check_comm {
         @lasttl=`/usr/ucb/ls -lt *tl`;
         print OUT "$lasttl[0]\n";
         close OUT;
-        #`cat $lockfile | mailx -s"check_comm" brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu`;
-        `cat $lockfile | mailx -s"check_comm" brad\@head.cfa.harvard.edu`;
+        #`cat $lockfile | mailx -s"check_comm" brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu 6172573986\@mobile.mycingular.com 6177214360\@vtext.com`;
+        ##`cat $lockfile | mailx -s"check_comm" brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu 6172573986\@mobile.mycingular.com`;
+        #`cat $lockfile | mailx -s"check_comm" brad\@head.cfa.harvard.edu`;
         # rewrite in nicer format for sot_lead
         unlink $lockfile;
         open(OUT,">$lockfile");
-        print OUT "Real-time data expected but not received for 40 minutes.\n";
+        print OUT "Real-time data expected but not received for 3 or more minutes.\n";
         print OUT "Comm expected:\n";
         print OUT "$line[10] $line[0] UT ";
         print OUT "$line[5] $line[6] $line[7] $line[8] $line[9]\n";
