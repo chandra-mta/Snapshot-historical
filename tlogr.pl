@@ -1,10 +1,11 @@
 #!/opt/local/bin/perl
 #/usr/bin/perl
 #/proj/axaf/bin/perl
-
+#replace cronjob while (1) {
 # Will not run if RT data is not flowing,
 #  to force update, even on old data, use -f option.
-
+print "Run tlogr\n";
+#exit;
 use snap;
 
 # produce a Chandra status snapshot
@@ -79,10 +80,11 @@ if (! $aos) {
   # see if we should be aos
   check_comm($check_comm_file);
   # if no data on primary or backup, send alert
-  if (-s $check_comm_file && -s $check_comm_file_bu && ! -s $check_comm_sent) {
+  if (-s $check_comm_file && -s $check_comm_file_bu && ! -s $check_comm_sent && &time_test($check_comm_file,20)) {
     `cp $check_comm_file $check_comm_sent`;
     #`cat $check_comm_file | mailx -s 'check_comm' brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu`;
-    `cat $check_comm_file | mailx -s 'check_comm' sot_lead\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu jnichols\@head.cfa.harvard.edu`;
+    #`cat $check_comm_file | mailx -s 'check_comm' sot_lead\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu jnichols\@head.cfa.harvard.edu`;
+    `cat $check_comm_file | mailx -s 'check_comm' brad\@head.cfa.harvard.edu`;
   } # if (-s $check_comm_file && -s $check_comm_file_bu && 
   # give backup control of alerts, in case it sees data
   if (! -e "/home/mta/Snap/.alerts_bu") {
@@ -101,7 +103,7 @@ if (-e "/home/mta/Snap/.alerts_bu") {
 } # if (-e "/home/mta/Snap/.alerts_bu") {
 # start check_comm all clear e-mails
 if (-s $check_comm_file) {
-  open MAIL, "| mailx -s 'check_comm' brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+  open MAIL, "| mailx -s 'check_comm' brad\@head.cfa.harvard.edu";
   print MAIL "Rhodes data flow resumed.\n";
   close MAIL;
   unlink $check_comm_file;
@@ -110,7 +112,8 @@ if (-s $check_comm_file) {
 #if (! -s $check_comm_file && ! -s $check_comm_file_bu && -s $check_comm_sent) {
 if (! -s $check_comm_file && -s $check_comm_sent) {
   #open MAIL, "| mailx -s 'check_comm' brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-  open MAIL, "| mailx -s 'check_comm' sot_lead\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu jnichols\@head.cfa.harvard.edu";
+  #open MAIL, "| mailx -s 'check_comm' sot_lead\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu jnichols\@head.cfa.harvard.edu";
+  open MAIL, "| mailx -s 'check_comm' brad\@head.cfa.harvard.edu";
   print MAIL "Real-time data flow has resumed.\n";
   close MAIL;
   unlink $check_comm_sent;
@@ -137,6 +140,7 @@ use comps;
 
 # check state
 use check_state;
+#use check_state_sim;
 %h = check_state(%h);
 
 #foreach $msid ( keys %h ) {
@@ -202,6 +206,21 @@ open(SF,">>$snapf") or die "Cannot append to $snapf\n";
 print SF $snap_html;
 close SF;
 #}
+
+# make a static archive
+$snapf = "$web_dir/snarc.html";
+$snapfa = "$web_dir/snarc.tmp";
+`mv $snapf $snapfa`;
+open(SFA,"<$snapfa") or die "Cannot open to $snapfa\n";
+open(SF,">$snapf") or die "Cannot open to $snapf\n";
+print SF "<html><body bgcolor=\"\#000000\"><pre>\n";
+print SF $snap_html;
+<SFA>; # skip old header
+while (<SFA>) {
+  print SF $_;
+}
+close SFA;
+close SF;
  
 # make wireless page
 #$snapf = "/data/mta4/www/WL/snap.wml";
@@ -227,3 +246,5 @@ unlink $lock;
 
 `/opt/local/bin/idl plot > /dev/null`;  # make plots
 #end
+#replace cronjob sleep 60;
+#replace cronjob }
