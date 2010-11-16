@@ -90,7 +90,8 @@ $top = (open SF, './chandra.snapshot')? <SF> : '';
 
 # read the current proton flux info
 
- $pfile = '/proj/rac/ops/CRM2/CRMsummary.dat';
+ #$pfile = '/proj/rac/ops/CRM2/CRMsummary.dat';
+ $pfile = './CRMsummary.dat';  # it is now copied over for DMZ transistion 11/16/10 bds
  open FF, $pfile;
  while (<FF>) {$fluxinfo .= $_};
 
