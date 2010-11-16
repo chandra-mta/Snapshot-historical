@@ -19,7 +19,7 @@ use Chex;
 #mirror $snarcdir = '/data/mta/www/MIRROR/Snap';
 #$snarcdir = '/proj/ascwww/AXAF/extra/science/cgi-gen/mta/Snap';
 $snarcdir = '/data/mta4/www/Snapshot';
-@snarcfiles = <$snarcdir/snarc.*>;
+@snarcfiles = <$snarcdir/snarc.2*>;
 foreach $f (@snarcfiles) {
     if (open SF, $f) {
 	while (<SF>) {
