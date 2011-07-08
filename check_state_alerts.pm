@@ -1501,7 +1501,7 @@ sub send_fmt_alert {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "$work_dir/.fmt5alert";
+  my $afile = "/home/mta/Snap/.fmt5alert";
   my $comfile = "/pool14/chandra/DSN.schedule";
   if (-s $afile) {
   } else {

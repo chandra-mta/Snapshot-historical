@@ -1227,7 +1227,7 @@ sub send_107_alert {
     #print FILE "http://cxc.harvard.edu/mta_days/MIRROR/Snap/snap.cgi\n"; #debug
     #print FILE "This message sent to sot_yellow_alert\n"; #debug
     print FILE "This message sent to sot_red_alert\n"; #debug
-    #print FILE "This message sent to brad rac swolk\n"; #debug
+    #print FILE "This message sent to brad swolk\n"; #debug
     #print FILE "This message sent to brad\n"; #debug
     #print FILE "\n TEST   TEST   TEST   TEST   TEST   TEST   TEST\n"; #debug
     close FILE;
@@ -1501,7 +1501,7 @@ sub send_fmt_alert {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "$work_dir/.fmt5alert";
+  my $afile = "/home/mta/Snap/.fmt5alert";
   my $comfile = "/pool14/chandra/DSN.schedule";
   if (-s $afile) {
   } else {
