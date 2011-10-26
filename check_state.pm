@@ -1192,6 +1192,7 @@ sub send_107_alert {
     #print FILE "  THIS IS ONLY A TEST !!!! \n\n"; #debug
     #print FILE "(Testing ... I wasn't working before, but now I am)\n"; #debug
     print FILE "Chandra realtime telemetry shows SCS107 $_[0] at $obt UT\n\n";
+    print FILE "\nTelecon on 1-877-521-0441 111165\# now.\n";
     # try to figure out next comm passes
     open COMS, $comfile;
     <COMS>;
@@ -1236,7 +1237,7 @@ sub send_107_alert {
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
     #open MAIL, "|mail sot_yellow_alert\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s SCS107 sot_red_alert\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s SCS107 sot_red_alert\@head.cfa.harvard.edu operators\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s 'SCS107 telecon 111165\# now' sot_red_alert\@head.cfa.harvard.edu operators\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s SCS107 brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     open FILE, $afile;
