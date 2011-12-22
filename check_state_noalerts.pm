@@ -142,16 +142,16 @@ sub radmon {
     my $sim = ${$hash{"3TSCPOS"}}[1];
     my $obs = ${$hash{COBSRQID}}[1];
     my $color = $BLU; # Default to blue (not checked or undef)
-    if ($obs > 55000 && $sim < -99000 && $val eq "ENAB") {
+    if ($obs > 50000 && $sim < -99000 && $val eq "ENAB") {
       $color = $RED;
     }
-    if ($obs > 55000 && $sim < -99000 && $val eq "DISA") {
+    if ($obs > 50000 && $sim < -99000 && $val eq "DISA") {
       $color = $GRN;
     }
-    if (($obs < 55000 || $sim > -99000) && $val eq "DISA") {
+    if (($obs < 50000 || $sim > -99000) && $val eq "DISA") {
       $color = $RED;
     }
-    if (($obs < 55000 || $sim > -99000) && $val eq "ENAB") {
+    if (($obs < 50000 || $sim > -99000) && $val eq "ENAB") {
       $color = $GRN;
     }
     if ($alt > $radalt && $val eq "ENAB") {
@@ -1192,6 +1192,7 @@ sub send_107_alert {
     #print FILE "  THIS IS ONLY A TEST !!!! \n\n"; #debug
     #print FILE "(Testing ... I wasn't working before, but now I am)\n"; #debug
     print FILE "Chandra realtime telemetry shows SCS107 $_[0] at $obt UT\n\n";
+    print FILE "\nTelecon on 1-877-521-0441 111165\# now.\n";
     # try to figure out next comm passes
     open COMS, $comfile;
     <COMS>;
@@ -1227,7 +1228,7 @@ sub send_107_alert {
     #print FILE "http://cxc.harvard.edu/mta_days/MIRROR/Snap/snap.cgi\n"; #debug
     #print FILE "This message sent to sot_yellow_alert\n"; #debug
     print FILE "This message sent to sot_red_alert\n"; #debug
-    #print FILE "This message sent to brad rac swolk\n"; #debug
+    #print FILE "This message sent to brad swolk\n"; #debug
     #print FILE "This message sent to brad\n"; #debug
     #print FILE "\n TEST   TEST   TEST   TEST   TEST   TEST   TEST\n"; #debug
     close FILE;
@@ -1236,7 +1237,8 @@ sub send_107_alert {
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
     #open MAIL, "|mail sot_yellow_alert\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s SCS107 sot_red_alert\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s SCS107 sot_red_alert\@head.cfa.harvard.edu operators\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s 'SCS107 telecon 111165\# now' sot_red_alert\@head.cfa.harvard.edu operators\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s 'SCS107 telecon 111165\# now' 617257386\@mms.att.net";
     #open MAIL, "|mailx -s SCS107 brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     open FILE, $afile;
@@ -1501,7 +1503,7 @@ sub send_fmt_alert {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "$work_dir/.fmt5alert";
+  my $afile = "/home/mta/Snap/.fmt5alert";
   my $comfile = "/pool14/chandra/DSN.schedule";
   if (-s $afile) {
   } else {

@@ -142,16 +142,16 @@ sub radmon {
     my $sim = ${$hash{"3TSCPOS"}}[1];
     my $obs = ${$hash{COBSRQID}}[1];
     my $color = $BLU; # Default to blue (not checked or undef)
-    if ($obs > 55000 && $sim < -99000 && $val eq "ENAB") {
+    if ($obs > 50000 && $sim < -99000 && $val eq "ENAB") {
       $color = $RED;
     }
-    if ($obs > 55000 && $sim < -99000 && $val eq "DISA") {
+    if ($obs > 50000 && $sim < -99000 && $val eq "DISA") {
       $color = $GRN;
     }
-    if (($obs < 55000 || $sim > -99000) && $val eq "DISA") {
+    if (($obs < 50000 || $sim > -99000) && $val eq "DISA") {
       $color = $RED;
     }
-    if (($obs < 55000 || $sim > -99000) && $val eq "ENAB") {
+    if (($obs < 50000 || $sim > -99000) && $val eq "ENAB") {
       $color = $GRN;
     }
     if ($alt > $radalt && $val eq "ENAB") {
@@ -1238,6 +1238,7 @@ sub send_107_alert {
     #open MAIL, "|mail sot_yellow_alert\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s SCS107 sot_red_alert\@head.cfa.harvard.edu";
     open MAIL, "|mailx -s 'SCS107 telecon 111165\# now' sot_red_alert\@head.cfa.harvard.edu operators\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s 'SCS107 telecon 111165\# now' 617257386\@mms.att.net";
     #open MAIL, "|mailx -s SCS107 brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     open FILE, $afile;
