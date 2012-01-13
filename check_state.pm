@@ -1039,8 +1039,9 @@ sub aacccdpt {
       }
     }
   } # if ($val < 0) {
-  if ($val > -18.3 || $val < -21.5) {
+  if ($val > -17.0 || $val < -21.5) {
     $color = $YLW;
+    send_aacccdpt_yellow_alert($val);
     my $tnum = 0;  # but, wait a little while before waking people up
     if (-s $tfile) {
       open (TF, "<$tfile");
@@ -1049,7 +1050,7 @@ sub aacccdpt {
     }
     $tnum++;
     if ($tnum == 3) {
-      send_aacccdpt_yellow_alert($val);
+      #send_aacccdpt_yellow_alert($val);
     }
     if ($tnum <= 3) {
       open (TF, ">$tfile");
@@ -1067,7 +1068,7 @@ sub aacccdpt {
     }
     $tnum++;
     if ($tnum == 3) {
-      send_aacccdpt_red_alert($val);
+      #send_aacccdpt_red_alert($val);
     }
     if ($tnum <= 3) {
       open (TF, ">$tfile");
@@ -1750,17 +1751,17 @@ sub send_aacccdpt_yellow_alert {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "/home/mta/Snap/.aacccdptalert";
+  my $afile = "/home/mta/Snap/.aacccdptyalert";
   if (-s $afile) {
   } else {
     open FILE, ">$afile";
-    print FILE "Chandra realtime telemetry shows  AACCCDPT = $_[0] C at $obt UT\n";
-    print FILE "Limit > -21.5 C and < -18.3 C\n\n";
-    print FILE "This message sent to aspect_help,brad,swolk\n"; #debug
+    printf FILE "Chandra realtime telemetry shows  AACCCDPT = %6.2f C at $obt UT\n",$_[0];
+    print FILE "Limit > -21.5 C and < -17.0 C\n\n";
+    #print FILE "This message sent to taldcroft\n"; #debug
     close FILE;
 
-    #open MAIL, "|mailx -s AACCCDPT brad\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s AACCCDPT aspect_help,brad,swolk";
+    open MAIL, "|mailx -s AACCCDPT jeanconn,aldcroft,emartin,brad";
+    #open MAIL, "|mailx -s AACCCDPT brad";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
@@ -1784,8 +1785,8 @@ sub send_aacccdpt_red_alert {
     print FILE "This message sent to sot_red_alert\n"; #debug
     close FILE;
 
-    #open MAIL, "|mailx -s AACCCDPT brad\@head.cfa.harvard.edu,swolk";
-    open MAIL, "|mailx -s AACCCDPT sot_red_alert\@head.cfa.harvard.edu,aspect_help,6177214364\@vtext.com,8006724485\@archwireless.net";
+    open MAIL, "|mailx -s AACCCDPT brad\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s AACCCDPT sot_red_alert\@head.cfa.harvard.edu,aspect_help,6177214364\@vtext.com,8006724485\@archwireless.net";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
