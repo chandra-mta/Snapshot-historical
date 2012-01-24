@@ -73,7 +73,7 @@ $s .= sprintf "Pitch Mom. %8.3f   UpL Cmd Acc%7d   EPH A-Leak%8.4f   P4GM%11.1f\
 $s .= sprintf "Yaw Mom.   %8.3f   Cmd Rej A%9d   EPH B-Leak%8.4f   P41GM%10.1f\n",
     ${$h{AOSYMOM3}}[1], ${$h{CMRJCNTA}}[1], ${$h{"5EHSE500"}}[1], ${$h{P41GM}}[1];
 
-$s .= sprintf "%43sEPH temp %9.2f\n", " ",${$h{TEPHIN}}[1];
+$s .= sprintf "PMTANKP    %8.3f                        EPH temp %9.2f\n", ${$h{PMTANKP}}[1],${$h{TEPHIN}}[1];
 
 $s .= sprintf "Gyro 2 Curr 1 %6.2f  Roll Bias  %7.4f", ${$h{AIRU2G1I}}[1], ${$h{AOGBIAS1}}[1]*206264.98;
 #$s .= sprintf "\nGyro 1 Curr 1 %6.2f  Roll Bias  %7.4f  EPH 27I %9.2f", ${$h{AIRU1G1I}}[1], ${$h{AOGBIAS1}}[1]*206264.98, ${$h{"5HSE202"}}[1];
@@ -292,23 +292,24 @@ $s .= sprintf "<font color=%s>Pitch Mom. %8.3f   </font></a>",
                ${$h{AOSYMOM2}}[3], ${$h{AOSYMOM2}}[1];
 $s .= sprintf "<font color=%s>UpL Cmd Acc%7d   </font>",
                ${$h{CULACC}}[3], ${$h{CULACC}}[1];
-$s .= sprintf "<font color=%s>EPH A-Leak%8.4f   </font>",
+$s .= sprintf "<font color=%s>EPH A-Leak%8.4f   </font>\n",
                ${$h{ALEAK}}[3], ${$h{ALEAK}}[1];
-$s .= sprintf "<font color=%s>P4GM%11.1f</font>\n",
-               ${$h{P4GM}}[3], ${$h{P4GM}}[1];
+#$s .= sprintf "<font color=%s>P4GM%11.1f</font>\n",
+               ##${$h{P4GM}}[3], ${$h{P4GM}}[1];
+               #"#999999", ${$h{P4GM}}[1];
 
 $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/mom_plot.html" STYLE="text-decoration: none" target="blank">';
 $s .= sprintf "<font color=%s>Yaw Mom.   %8.3f   </font></a>",
                ${$h{AOSYMOM3}}[3], ${$h{AOSYMOM3}}[1];
 $s .= sprintf "<font color=%s>Cmd Rej A%9d   </font>",
                ${$h{CMRJCNTA}}[3], ${$h{CMRJCNTA}}[1];
-$s .= sprintf "<font color=%s>EPH B-Leak%8.4f   </font>",
+$s .= sprintf "<font color=%s>EPH B-Leak%8.4f   </font>\n",
                ${$h{"5EHSE500"}}[3], ${$h{"5EHSE500"}}[1];
-$s .= sprintf "<font color=%s>P41GM%10.1f</font>\n",
-               ${$h{P41GM}}[3], ${$h{P41GM}}[1];
+#$s .= sprintf "<font color=%s>P41GM%10.1f</font>\n",
+               ##${$h{P41GM}}[3], ${$h{P41GM}}[1];
+               #"#999999", ${$h{P41GM}}[1];
 
-$s .= sprintf "%43s<font color=%s>EPH temp %9.2f</font>\n",
-               " ",${$h{TEPHIN}}[3], ${$h{TEPHIN}}[1];
+$s .= sprintf "<font color=%s>PMTANKP    %8.3f </font>%23s<font color=%s>EPH temp %9.2f</font>\n",${$h{PMTANKP}}[3],${$h{PMTANKP}}[1]," ",${$h{TEPHIN}}[3], ${$h{TEPHIN}}[1];
 
 $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/iru_plot.html" STYLE="text-decoration: none" target="blank">';
 $s .= sprintf "<font color=%s>Gyro 2 Curr 1 %6.2f</font></a>   ", 
