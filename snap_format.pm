@@ -64,36 +64,76 @@ $s .= sprintf "                       SCS 130  %4s       -Y SA Temp %7.2f   E300
 
 #$s .= sprintf "Roll Mom.  %8.3f                                             E1300%10.1f\n",
     #${$h{AOSYMOM1}}[1], $eph{E1300};
-$s .= sprintf "Roll Mom.  %8.3f    SCS 107  %4s                            E1300%10.1f\n",
-    ${$h{AOSYMOM1}}[1], ${$h{COSCS107S}}[1], ${$h{E1300}}[1];
+$s .= sprintf "Roll Mom.  %8.3f    SCS 131  %4s                            E1300%10.1f\n",
+    ${$h{AOSYMOM1}}[1], ${$h{COSCS131S}}[1], ${$h{E1300}}[1];
 
-$s .= sprintf "Pitch Mom. %8.3f   UpL Cmd Acc%7d   EPH A-Leak%8.4f   P4GM%11.1f\n",
-    ${$h{AOSYMOM2}}[1], ${$h{CULACC}}[1], ${$h{ALEAK}}[1], ${$h{P4GM}}[1];
+$s .= sprintf "Pitch Mom. %8.3f    SCS 132  %4s       EPH A-Leak%8.4f   UpLCmdAcc%6d\n",
+    ${$h{AOSYMOM2}}[1], ${$h{COSCS132S}}[1], ${$h{ALEAK}}[1], ${$h{CULACC}}[1];
 
-$s .= sprintf "Yaw Mom.   %8.3f   Cmd Rej A%9d   EPH B-Leak%8.4f   P41GM%10.1f\n",
-    ${$h{AOSYMOM3}}[1], ${$h{CMRJCNTA}}[1], ${$h{"5EHSE500"}}[1], ${$h{P41GM}}[1];
+$s .= sprintf "Yaw Mom.   %8.3f    SCS 133  %4s       EPH B-Leak%8.4f   Cmd Rej A%6d\n",
+    ${$h{AOSYMOM3}}[1], ${$h{COSCS133S}}[1], ${$h{"5EHSE500"}}[1], ${$h{CMRJCNTA}}[1];
 
-$s .= sprintf "PMTANKP    %8.3f                        EPH temp %9.2f\n", ${$h{PMTANKP}}[1],${$h{TEPHIN}}[1];
+$s .= sprintf "PMTANKP    %8.3f    SCS 107  %4s       EPH temp %9.2f\n", ${$h{PMTANKP}}[1],${$h{COSCS107S}}[1],${$h{TEPHIN}}[1];
 
-$s .= sprintf "Gyro 2 Curr 1 %6.2f  Roll Bias  %7.4f", ${$h{AIRU2G1I}}[1], ${$h{AOGBIAS1}}[1]*206264.98;
-#$s .= sprintf "\nGyro 1 Curr 1 %6.2f  Roll Bias  %7.4f  EPH 27I %9.2f", ${$h{AIRU1G1I}}[1], ${$h{AOGBIAS1}}[1]*206264.98, ${$h{"5HSE202"}}[1];
-$s .= sprintf "%23s M Unload %6s\n", " ",${$h{AOUNLOAD}}[1];
-$s .= sprintf "Gyro 2 Curr 2 %6.2f  Pitch Bias %7.4f", ${$h{AIRU2G2I}}[1], ${$h{AOGBIAS2}}[1]*206264.98;
+#$s .= sprintf "Gyro 2 Curr 1 %6.2f                  ", ${$h{AIRU2G1I}}[1];
+##$s .= sprintf "\nGyro 1 Curr 1 %6.2f  Roll Bias   %7.4f  EPH 27I %9.2f", ${$h{AIRU1G1I}}[1], ${$h{AOGBIAS1}}[1]*206264.98, ${$h{"5HSE202"}}[1];
+#$s .= sprintf "%25s M Unload %6s\n", " ",${$h{AOUNLOAD}}[1];
+#$s .= sprintf "Gyro 2 Curr 2 %6.2f  Roll Bias  %7.4f", ${$h{AIRU2G2I}}[1], ${$h{AOGBIAS1}}[1]*206264.98;
+#if (${$h{CTXAPWR}}[1] > 15) {
+  #$s .= sprintf "   CTX A PWR   %6.2f", ${$h{CTXAPWR}}[1];
+#} else {
+  #$s .= sprintf "   CTX B PWR   %6.2f", ${$h{CTXBPWR}}[1];
+#}
+#$s .= sprintf "   TSC Move %6s\n", ${$h{"3TSCMOVE"}}[1];
+#$s .= sprintf "Prop. line 03 %6.2f  Pitch Bias %7.4f", ${$h{PLINE03T}}[1], ${$h{AOGBIAS2}}[1]*206264.98;
+#if (${$h{CTXAV}}[1] > 1) {
+  #$s .= sprintf "   CTX A Volts %6.2f", ${$h{CTXAV}}[1];
+#} else {
+  #$s .= sprintf "   CTX B Volts %6.2f", ${$h{CTXBV}}[1];
+#}
+#$s .= sprintf "   FA Move  %6s\n", ${$h{"3FAMOVE"}}[1];
+#$s .= sprintf "Prop. line 04 %6.2f  Yaw Bias   %7.4f", ${$h{PLINE04T}}[1], ${$h{AOGBIAS3}}[1]*206264.98;
+#$s .= sprintf "%23s OTG Move %6s\n", " ",${$h{"4OOTGMEF"}}[1];
+
+$s .= sprintf "Gyro 2 Curr 1 %6.2f   ",
+               ${$h{AIRU2G1I}}[1];
+if ((${$h{"5EHSE106"}}[1]) % 2 == 1) {
+  $s .= sprintf "%18s  EPH 27V  %9.2f",
+                 " ", ${$h{"5HSE202"}}[1];
+} else {
+  $s .= sprintf "%18s  EPH 27I  %9.2f",
+                 " ",${$h{"5HSE202"}}[1]*20.1/31.05;
+} # if ((${$h{"5EHSE106"}}[3]+1) % 2 == 0) {
+$s .= sprintf "%3sM Unload %6s\n",
+               " ", ${$h{AOUNLOAD}}[1];
+$s .= sprintf "Gyro 2 Curr 2 %6.2f   ",
+               ${$h{AIRU2G2I}}[1];
+$s .= sprintf "Roll Bias  %7.4f",
+               ${$h{AOGBIAS1}}[1]*206264.98;
+$s .= sprintf "%23sTSC Move %6s\n",
+               " ", ${$h{"3TSCMOVE"}}[1];
+$s .= sprintf "Prop. line 03 %6.2f   ",
+               ${$h{PLINE03T}}[1];
+$s .= sprintf "Pitch Bias %7.4f",
+               ${$h{AOGBIAS2}}[1]*206264.98;
 if (${$h{CTXAPWR}}[1] > 15) {
-  $s .= sprintf "   CTX A PWR   %6.2f", ${$h{CTXAPWR}}[1];
+  $s .= sprintf "  CTX A PWR  %7.2f", ${$h{CTXAPWR}}[1];
 } else {
-  $s .= sprintf "   CTX B PWR   %6.2f", ${$h{CTXBPWR}}[1];
+  $s .= sprintf "  CTX B PWR  %7.2f", ${$h{CTXBPWR}}[1];
 }
-$s .= sprintf "   TSC Move %6s\n", ${$h{"3TSCMOVE"}}[1];
-$s .= sprintf "Prop. line 03 %6.2f  Yaw Bias   %7.4f", ${$h{PLINE03T}}[1], ${$h{AOGBIAS3}}[1]*206264.98;
+$s .= sprintf "   FA Move  %6s\n",
+               ${$h{"3FAMOVE"}}[1];
+$s .= sprintf "Prop. line 04 %6.2f",
+               ${$h{PLINE04T}}[1];
+$s .= sprintf "%3sYaw Bias   %7.4f",
+               " ", ${$h{AOGBIAS3}}[1]*206264.98;
 if (${$h{CTXAV}}[1] > 1) {
-  $s .= sprintf "   CTX A Volts %6.2f", ${$h{CTXAV}}[1];
+  $s .= sprintf "  CTX A Volts  %5.2f", ${$h{CTXAV}}[1];
 } else {
-  $s .= sprintf "   CTX B Volts %6.2f", ${$h{CTXBV}}[1];
+  $s .= sprintf "  CTX B Volts  %5.2f", ${$h{CTXBV}}[1];
 }
-$s .= sprintf "   FA Move  %6s\n", ${$h{"3FAMOVE"}}[1];
-$s .= sprintf "Prop. line 04 %6.2f", ${$h{PLINE04T}}[1];
-$s .= sprintf "%43s OTG Move %6s\n", " ",${$h{"4OOTGMEF"}}[1];
+$s .= sprintf "%3sOTG Move %6s\n",
+               " ",${$h{"4OOTGMEF"}}[1];
 
 return $s;
 
@@ -282,47 +322,55 @@ $s .= sprintf "<font color=%s>E300%11.1f</font>\n",
 $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/mom_plot.html" STYLE="text-decoration: none" target="blank">';
 $s .= sprintf "<font color=%s>Roll Mom.  %8.3f    </font></a>",
                ${$h{AOSYMOM1}}[3], ${$h{AOSYMOM1}}[1];
-$s .= sprintf "<font color=%s>SCS 107  %4s                            </font>",
-               ${$h{COSCS107S}}[3], ${$h{COSCS107S}}[1];
+$s .= sprintf "<font color=%s>SCS 131  %4s                            </font>",
+               ${$h{COSCS131S}}[3], ${$h{COSCS131S}}[1];
 $s .= sprintf "<font color=%s>E1300%10.1f</font>\n",
                ${$h{E1300}}[3], ${$h{E1300}}[1];
 
 $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/mom_plot.html" STYLE="text-decoration: none" target="blank">';
-$s .= sprintf "<font color=%s>Pitch Mom. %8.3f   </font></a>",
+$s .= sprintf "<font color=%s>Pitch Mom. %8.3f    </font></a>",
                ${$h{AOSYMOM2}}[3], ${$h{AOSYMOM2}}[1];
-$s .= sprintf "<font color=%s>UpL Cmd Acc%7d   </font>",
-               ${$h{CULACC}}[3], ${$h{CULACC}}[1];
-$s .= sprintf "<font color=%s>EPH A-Leak%8.4f   </font>\n",
+$s .= sprintf "<font color=%s>SCS 132  %4s       </font>",
+               ${$h{COSCS132S}}[3], ${$h{COSCS132S}}[1];
+$s .= sprintf "<font color=%s>EPH A-Leak%8.4f   </font>",
                ${$h{ALEAK}}[3], ${$h{ALEAK}}[1];
+$s .= sprintf "<font color=%s>UpLCmdAcc%6d   </font>\n",
+               ${$h{CULACC}}[3], ${$h{CULACC}}[1];
 #$s .= sprintf "<font color=%s>P4GM%11.1f</font>\n",
                ##${$h{P4GM}}[3], ${$h{P4GM}}[1];
                #"#999999", ${$h{P4GM}}[1];
 
 $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/mom_plot.html" STYLE="text-decoration: none" target="blank">';
-$s .= sprintf "<font color=%s>Yaw Mom.   %8.3f   </font></a>",
+$s .= sprintf "<font color=%s>Yaw Mom.   %8.3f    </font></a>",
                ${$h{AOSYMOM3}}[3], ${$h{AOSYMOM3}}[1];
-$s .= sprintf "<font color=%s>Cmd Rej A%9d   </font>",
-               ${$h{CMRJCNTA}}[3], ${$h{CMRJCNTA}}[1];
-$s .= sprintf "<font color=%s>EPH B-Leak%8.4f   </font>\n",
+$s .= sprintf "<font color=%s>SCS 133  %4s       </font>",
+               ${$h{COSCS133S}}[3], ${$h{COSCS133S}}[1];
+$s .= sprintf "<font color=%s>EPH B-Leak%8.4f   </font>",
                ${$h{"5EHSE500"}}[3], ${$h{"5EHSE500"}}[1];
+$s .= sprintf "<font color=%s>Cmd Rej A%6d   </font>\n",
+               ${$h{CMRJCNTA}}[3], ${$h{CMRJCNTA}}[1];
 #$s .= sprintf "<font color=%s>P41GM%10.1f</font>\n",
                ##${$h{P41GM}}[3], ${$h{P41GM}}[1];
                #"#999999", ${$h{P41GM}}[1];
 
-$s .= sprintf "<font color=%s>PMTANKP    %8.3f </font>%23s<font color=%s>EPH temp %9.2f</font>\n",${$h{PMTANKP}}[3],${$h{PMTANKP}}[1]," ",${$h{TEPHIN}}[3], ${$h{TEPHIN}}[1];
+$s .= sprintf "<font color=%s>PMTANKP     %7.3f    </font></a>",
+               ${$h{PMTANKP}}[3], ${$h{PMTANKP}}[1];
+$s .= sprintf "<font color=%s>SCS 107  %4s       </font>",
+               ${$h{COSCS107S}}[3], ${$h{COSCS107S}}[1];
+$s .= sprintf "<font color=%s>EPH temp %9.2f   </font>\n",
+               ${$h{"TEPHIN"}}[3], ${$h{"TEPHIN"}}[1];
+
+#$s .= sprintf "<font color=%s>PMTANKP     %8.3f </font>%23s<font color=%s>EPH temp %9.2f</font>\n",${$h{PMTANKP}}[3],${$h{PMTANKP}}[1]," ",${$h{TEPHIN}}[3], ${$h{TEPHIN}}[1];
 
 $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/iru_plot.html" STYLE="text-decoration: none" target="blank">';
 $s .= sprintf "<font color=%s>Gyro 2 Curr 1 %6.2f</font></a>   ", 
                ${$h{AIRU2G1I}}[3], ${$h{AIRU2G1I}}[1];
-$s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/iru_bias_plot.html" STYLE="text-decoration: none" target="blank">';
-$s .= sprintf "<font color=%s>Roll Bias  %7.4f</font></a>", 
-               ${$h{AOGBIAS1}}[3], ${$h{AOGBIAS1}}[1]*206264.98;
 if ((${$h{"5EHSE106"}}[1]) % 2 == 1) {
-  $s .= sprintf "<font color=%s>  EPH 27V  %9.2f</font></a>", 
-                 ${$h{"5HSE202"}}[3], ${$h{"5HSE202"}}[1];
+  $s .= sprintf "%18s<font color=%s>  EPH 27V  %9.2f</font></a>", 
+                 " ",${$h{"5HSE202"}}[3], ${$h{"5HSE202"}}[1];
 } else {
-  $s .= sprintf "<font color=%s>  EPH 27I  %9.2f</font></a>", 
-                 ${$h{"5HSE202"}}[3], ${$h{"5HSE202"}}[1]*20.1/31.05;
+  $s .= sprintf "%18s<font color=%s>  EPH 27I  %9.2f</font></a>", 
+                 " ",${$h{"5HSE202"}}[3], ${$h{"5HSE202"}}[1]*20.1/31.05;
 } # if ((${$h{"5EHSE106"}}[3]+1) % 2 == 0) {
 $s .= sprintf "%3s<font color=%s>M Unload %6s</font></a>\n", 
                " ",${$h{AOUNLOAD}}[3], ${$h{AOUNLOAD}}[1];
@@ -330,8 +378,8 @@ $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/iru_plot.html" S
 $s .= sprintf "<font color=%s>Gyro 2 Curr 2 %6.2f</font></a>   ", 
                ${$h{AIRU2G2I}}[3], ${$h{AIRU2G2I}}[1];
 $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/iru_bias_plot.html" STYLE="text-decoration: none" target="blank">';
-$s .= sprintf "<font color=%s>Pitch Bias %7.4f</font></a>", 
-               ${$h{AOGBIAS2}}[3], ${$h{AOGBIAS2}}[1]*206264.98;
+$s .= sprintf "<font color=%s>Roll Bias  %7.4f</font></a>", 
+               ${$h{AOGBIAS1}}[3], ${$h{AOGBIAS1}}[1]*206264.98;
 $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/ctx_plot.html" STYLE="text-decoration: none" target="blank">';
 $s .= sprintf "%23s<font color=%s>TSC Move %6s</font></a>\n",
                " ",${$h{"3TSCMOVE"}}[3], ${$h{"3TSCMOVE"}}[1];
@@ -339,8 +387,8 @@ $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/iru_plot.html" S
 $s .= sprintf "<font color=%s>Prop. line 03 %6.2f</font></a>   ",
                ${$h{PLINE03T}}[3], ${$h{PLINE03T}}[1];
 $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/iru_bias_plot.html" STYLE="text-decoration: none" target="blank">';
-$s .= sprintf "<font color=%s>Yaw Bias   %7.4f</font></a>",
-               ${$h{AOGBIAS3}}[3], ${$h{AOGBIAS3}}[1]*206264.98;
+$s .= sprintf "<font color=%s>Pitch Bias %7.4f</font></a>", 
+               ${$h{AOGBIAS2}}[3], ${$h{AOGBIAS2}}[1]*206264.98;
 $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/ctx_plot.html" STYLE="text-decoration: none" target="blank">';
 if (${$h{CTXAPWR}}[1] > 15) {
   $s .= sprintf "  <font color=%s>CTX A PWR  %7.2f</font></a>", ${$h{CTXAPWR}}[3],${$h{CTXAPWR}}[1];
@@ -352,10 +400,13 @@ $s .= sprintf "   <font color=%s>FA Move  %6s</font>\n",
 $s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/iru_plot.html" STYLE="text-decoration: none" target="blank">';
 $s .= sprintf "<font color=%s>Prop. line 04 %6.2f</font></a>", 
                ${$h{PLINE04T}}[3], ${$h{PLINE04T}}[1];
+$s .= sprintf '<a href="http://cxc.harvard.edu/mta/DAILY/mta_rt/iru_bias_plot.html" STYLE="text-decoration: none" target="blank">';
+$s .= sprintf "%3s<font color=%s>Yaw Bias   %7.4f</font></a>",
+               " ",${$h{AOGBIAS3}}[3], ${$h{AOGBIAS3}}[1]*206264.98;
 if (${$h{CTXAV}}[1] > 1) {
-  $s .= sprintf "%23s<font color=%s>CTX A Volts  %5.2f</font>", " ",${$h{CTXAV}}[3],${$h{CTXAV}}[1];
+  $s .= sprintf "  <font color=%s>CTX A Volts  %5.2f</font>", ${$h{CTXAV}}[3],${$h{CTXAV}}[1];
 } else {
-  $s .= sprintf "%23s<font color=%s>CTX B Volts  %5.2f</font>", " ",${$h{CTXBV}}[3],${$h{CTXBV}}[1];
+  $s .= sprintf "  <font color=%s>CTX B Volts  %5.2f</font>", ${$h{CTXBV}}[3],${$h{CTXBV}}[1];
 }
 $s .= sprintf "%3s<font color=%s>OTG Move %6s</font>\n", 
                " ",${$h{"4OOTGMEF"}}[3], ${$h{"4OOTGMEF"}}[1];
