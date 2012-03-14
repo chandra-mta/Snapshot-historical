@@ -384,6 +384,57 @@ sub scs130 {
     return $color;
 }
 
+sub scs131 {
+    my $val = $_[0];
+    my $color = $BLU;
+    if (${$hash{COTLRDSF}}[1] eq 'EPS') {
+      if ($val ne 'ACT') {
+        $color = $YLW;
+        #my $scs132 = ${$hash{COSCS132S}}[1];
+        #my $scs132 = ${$hash{COSCS132S}}[1];
+        #if ($scs129 ne 'ACT' && $scs130 ne 'ACT') {
+          #$color = $RED;
+        #}
+      } else {
+        $color = $GRN;
+      }
+    }
+    return $color;
+}
+sub scs132 {
+    my $val = $_[0];
+    my $color = $BLU;
+    if (${$hash{COTLRDSF}}[1] eq 'EPS') {
+      if ($val ne 'ACT') {
+        $color = $YLW;
+        #my $scs129 = ${$hash{COSCS129S}}[1];
+        #my $scs130 = ${$hash{COSCS130S}}[1];
+        #if ($scs129 ne 'ACT' && $scs130 ne 'ACT') {
+          #$color = $RED;
+        #}
+      } else {
+        $color = $GRN;
+      }
+    }
+    return $color;
+}
+sub scs133 {
+    my $val = $_[0];
+    my $color = $BLU;
+    if (${$hash{COTLRDSF}}[1] eq 'EPS') {
+      if ($val ne 'ACT') {
+        $color = $YLW;
+        #my $scs129 = ${$hash{COSCS129S}}[1];
+        #my $scs130 = ${$hash{COSCS130S}}[1];
+        #if ($scs129 ne 'ACT' && $scs130 ne 'ACT') {
+          #$color = $RED;
+        #}
+      } else {
+        $color = $GRN;
+      }
+    }
+    return $color;
+}
 sub scs107 {
     my $val = $_[0];
     my $afile = "/home/mta/Snap/.scs107alert";
@@ -411,7 +462,8 @@ sub scs107 {
           }
         }
       }
-      if (($val eq 'ACT' || $val eq 'DISA') && ${$hash{COSCS128S}}[1] ne 'ACT' && ${$hash{COSCS129S}}[1] ne 'ACT' && ${$hash{COSCS130S}}[1] ne 'ACT') {
+      if (($val eq 'ACT' || $val eq 'DISA') && ${$hash{COSCS131S}}[1] ne 'ACT' && ${$hash{COSCS132S}}[1] ne 'ACT' && ${$hash{COSCS133S}}[1] ne 'ACT') {
+      #if (($val eq 'ACT' || $val eq 'DISA') ) {
       #if ($val eq 'ACT' || $val eq 'DISA') {
       # add extra checks, rhodes is being shifty 08/12/03 bds
       #if ($val eq 'DISA') {
@@ -1686,7 +1738,7 @@ sub send_hkp27v_alert {
     close FILE;
 
     #open MAIL, "|mailx -s HKP27V sot_yellow_alert\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s HKP27V juda\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu aldcroft\@head.cfa.harvard.edu wap\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu das\@head.cfa.harvard.edu nadams\@head.cfa.harvard.edu fot\@head.cfa.harvard.edu emartin\@head.cfa.harvard.edu 8572591479\@vtext.com brad\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s HKP27V juda\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu aldcroft\@head.cfa.harvard.edu wap\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu das\@head.cfa.harvard.edu emk\@head.cfa.harvard.edu nadams\@head.cfa.harvard.edu depasq\@head.cfa.harvard.edu fot\@head.cfa.harvard.edu emartin\@head.cfa.harvard.edu 8572591479\@vtext brad\@head.cfa.harvard.edu";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
@@ -1786,7 +1838,7 @@ sub send_aacccdpt_red_alert {
     close FILE;
 
     open MAIL, "|mailx -s AACCCDPT brad\@head.cfa.harvard.edu";
-    #open MAIL, "|mailx -s AACCCDPT sot_red_alert\@head.cfa.harvard.edu,aspect_help,6177214364\@vtext.com,8572591479@vtext.com";
+    #open MAIL, "|mailx -s AACCCDPT sot_red_alert\@head.cfa.harvard.edu,aspect_help,6177214364\@vtext.com,8572591479\@vtext";
     open FILE, $afile;
     while (<FILE>) {
       print MAIL $_;
