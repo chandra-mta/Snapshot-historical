@@ -186,8 +186,8 @@ sub pcadmode {
     if ($grat[0] eq $UNDEF) {
       if ($val eq 'NMAN') {$color = $GRN;}
     }
-    my $afile = "/home/mta/Snap/.nsunalert";
-    my $tfile = "/home/mta/Snap/.nsunwait";
+    my $afile = "./.nsunalert";
+    my $tfile = "./.nsunwait";
     if ($val eq 'NPNT' || $val eq 'NMAN') {
       if (-s $afile) {
         my $tnum = 3;  # but, wait a little while before deleting lock
@@ -437,8 +437,8 @@ sub scs133 {
 }
 sub scs107 {
     my $val = $_[0];
-    my $afile = "/home/mta/Snap/.scs107alert";
-    my $tfile = "/home/mta/Snap/.scs107wait";
+    my $afile = "./.scs107alert";
+    my $tfile = "./.scs107wait";
     $color = $BLU;
     if (${$hash{COTLRDSF}}[1] eq 'EPS') {
       $color = $YLW;
@@ -493,10 +493,10 @@ sub scs107 {
 
 sub pmtankp {
   my $val = $_[0];
-  my $ayfile = "/home/mta/Snap/.ytankalert";
-  my $tyfile = "/home/mta/Snap/.ytankwait";
-  my $arfile = "/home/mta/Snap/.rtankalert";
-  my $trfile = "/home/mta/Snap/.rtankwait";
+  my $ayfile = "./.ytankalert";
+  my $tyfile = "./.ytankwait";
+  my $arfile = "./.rtankalert";
+  my $trfile = "./.rtankwait";
   if ($val > 175) {unlink $trfile;}
   $color = $YLW;
   if ($val < 180 && $val >= 175) {
@@ -539,8 +539,8 @@ sub pmtankp {
 
 sub aofstar {
   my $val = $_[0];
-  my $afile = "/home/mta/Snap/.britalert";
-  my $tfile = "/home/mta/Snap/.britwait";
+  my $afile = "./.britalert";
+  my $tfile = "./.britwait";
   $color = $YLW;
   if ($val eq 'GUID') {
     $color = $GRN;
@@ -585,8 +585,8 @@ sub aofstar {
       
 sub aocpestl {
   my $val = $_[0];
-  my $afile = "/home/mta/Snap/.cpealert";
-  my $tfile = "/home/mta/Snap/.cpewait";
+  my $afile = "./.cpealert";
+  my $tfile = "./.cpewait";
   $color = $YLW;
   if ($val eq 'NORM') {
     $color = $GRN;
@@ -645,7 +645,7 @@ sub fmt {
 
 sub airu1g1i {
     my $val = $_[0];
-    my $tfile = "/home/mta/Snap/.gyrowait";
+    my $tfile = "./.gyrowait";
     $color = $BLU;
     if ($val < 150) { $color =$GRN;}
     if ($val >= 150 && $val < 200) { $color =$YLW;}
@@ -675,9 +675,9 @@ sub airu1g1i {
 
 sub ctxapwr {
   my $val = $_[0];
-  my $afile = "/home/mta/Snap/.ctxpwralert";
-  my $tfile = "/home/mta/Snap/.ctxpwrwait";
-  my $dfile = "/home/mta/Snap/.ctxpwrdel";
+  my $afile = "./.ctxpwralert";
+  my $tfile = "./.ctxpwrwait";
+  my $dfile = "./.ctxpwrdel";
   my $ctxa_pwr_lim=36.75;
   # pwr is noisy, so we need two lock files send alert after
   #  10 violations rearm after 50 non-violations.
@@ -729,9 +729,9 @@ sub ctxapwr {
 
 sub ctxbpwr {
   my $val = $_[0];
-  my $afile = "/home/mta/Snap/.ctxpwralert";
-  my $tfile = "/home/mta/Snap/.ctxpwrwait";
-  my $dfile = "/home/mta/Snap/.ctxpwrdel";
+  my $afile = "./.ctxpwralert";
+  my $tfile = "./.ctxpwrwait";
+  my $dfile = "./.ctxpwrdel";
   my $ctxb_pwr_lim=36.75;
   # pwr is noisy, so we need two lock files send alert after
   #  10 violations rearm after 50 non-violations.
@@ -783,8 +783,8 @@ sub ctxbpwr {
 
 sub ctxav {
   my $val = $_[0];
-  my $afile = "/home/mta/Snap/.ctxvalert";
-  my $tfile = "/home/mta/Snap/.ctxvwait";
+  my $afile = "./.ctxvalert";
+  my $tfile = "./.ctxvwait";
   $color = $GRN;
   if ($val < 3.60) {
     $color = $GRN;
@@ -830,8 +830,8 @@ sub ctxav {
 
 sub ctxbv {
   my $val = $_[0];
-  my $afile = "/home/mta/Snap/.ctxvalert";
-  my $tfile = "/home/mta/Snap/.ctxvwait";
+  my $afile = "./.ctxvalert";
+  my $tfile = "./.ctxvwait";
   $color = $GRN;
   if ($val < 3.60) {
     $color = $GRN;
@@ -877,8 +877,8 @@ sub ctxbv {
 
 sub hkp27v {
   my ($val,$stat,$prev,$pstat,$lim,$abs_diff)=@_;
-  my $afile = "/home/mta/Snap/.hkp27valert";
-  my $tfile = "/home/mta/Snap/.hkp27vwait";
+  my $afile = "./.hkp27valert";
+  my $tfile = "./.hkp27vwait";
   #print "HKP27V  $val $stat $lim\n";
   $color = $WHT;
   if ($stat % 2 == 1) {
@@ -926,8 +926,8 @@ sub hkp27v {
 
 sub shldart {
   my $val = $_[0];
-  my $afile = "/home/mta/Snap/.hrc_shld_alert";
-  my $tfile = "/home/mta/Snap/.hrcshldwait";
+  my $afile = "./.hrc_shld_alert";
+  my $tfile = "./.hrcshldwait";
   if ($val > 255 || ${$hash{CORADMEN}}[1] eq 'DISA') {
     $color = $BLU;
   }
@@ -974,8 +974,8 @@ sub shldart {
 
 sub pline03t {
   my $val = $_[0];
-  my $afile = "/home/mta/Snap/.pline03talert";
-  my $tfile = "/home/mta/Snap/.pline03twait";
+  my $afile = "./.pline03talert";
+  my $tfile = "./.pline03twait";
   $color = $BLU;
   if ($val > 42.5) {
     $color = $GRN;
@@ -1021,8 +1021,8 @@ sub pline03t {
 
 sub pline04t {
   my $val = $_[0];
-  my $afile = "/home/mta/Snap/.pline04talert";
-  my $tfile = "/home/mta/Snap/.pline04twait";
+  my $afile = "./.pline04talert";
+  my $tfile = "./.pline04twait";
   $color = $BLU;
   if ($val > 42.5) {
     $color = $GRN;
@@ -1068,8 +1068,8 @@ sub pline04t {
 
 sub aacccdpt {
   my $val = $_[0];
-  my $afile = "/home/mta/Snap/.aacccdptalert";
-  my $tfile = "/home/mta/Snap/.aacccdptwait";
+  my $afile = "./.aacccdptalert";
+  my $tfile = "./.aacccdptwait";
   $color = $BLU;
   if ($val < 0) {
     $color = $GRN;
@@ -1134,8 +1134,8 @@ sub aacccdpt {
 
 sub ldrtno {
   my $val = $_[0];
-  my $afile = "/home/mta/Snap/.ldrtnoalert";
-  my $tfile = "/home/mta/Snap/.ldrtnowait";
+  my $afile = "./.ldrtnoalert";
+  my $tfile = "./.ldrtnowait";
   $color = $BLU;
   if ($val > 0) {
     $color = $GRN;
@@ -1183,7 +1183,7 @@ sub send_tank_red {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "/home/mta/Snap/.rtankalert";
+  my $afile = "./.rtankalert";
   if (-s $afile) {
   } else {
     open FILE, ">$afile";
@@ -1208,7 +1208,7 @@ sub send_tank_yellow {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "/home/mta/Snap/.ytankalert";
+  my $afile = "./.ytankalert";
   if (-s $afile) {
   } else {
     open FILE, ">$afile";
@@ -1236,7 +1236,7 @@ sub send_107_alert {
     return;
   }
   #my $afile = "$work_dir/.scs107alert";
-  my $afile = "/home/mta/Snap/.scs107alert";
+  my $afile = "./.scs107alert";
   #my $comfile = "/pool14/chandra/DSN.schedule";
   my $comfile = "/proj/rac/ops/ephem/dsn_summary.dat";
   if (-s $afile) {
@@ -1308,7 +1308,7 @@ sub send_nsun_alert {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "/home/mta/Snap/.nsunalert";
+  my $afile = "./.nsunalert";
   my $comfile = "/pool14/chandra/DSN.schedule";
   if (-s $afile) {
   } else {
@@ -1370,7 +1370,7 @@ sub send_sim_unsafe_alert {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "/home/mta/Snap/.sim_unsafe_alert";
+  my $afile = "./.sim_unsafe_alert";
   if (-s $afile) {
   } else {
     open FILE, ">$afile";
@@ -1397,7 +1397,7 @@ sub send_hrc_shld_alert {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "/home/mta/Snap/.hrc_shld_alert";
+  my $afile = "./.hrc_shld_alert";
   if (-s $afile) {
   } else {
     open FILE, ">$afile";
@@ -1428,7 +1428,7 @@ sub send_brit_alert {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "/home/mta/Snap/.britalert";
+  my $afile = "./.britalert";
   my $comfile = "/pool14/chandra/DSN.schedule";
   if (-s $afile) {
   } else {
@@ -1497,7 +1497,7 @@ sub send_cpe_alert {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "/home/mta/Snap/.cpealert";
+  my $afile = "./.cpealert";
   my $comfile = "/pool14/chandra/DSN.schedule";
   if (-s $afile) {
   } else {
@@ -1556,7 +1556,7 @@ sub send_fmt_alert {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "/home/mta/Snap/.fmt5alert";
+  my $afile = "./.fmt5alert";
   my $comfile = "/pool14/chandra/DSN.schedule";
   if (-s $afile) {
   } else {
@@ -1677,7 +1677,7 @@ sub send_ctxpwr_alert {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "/home/mta/Snap/.ctxpwralert";
+  my $afile = "./.ctxpwralert";
   if (-s $afile) {
   } else {
     open FILE, ">$afile";
@@ -1702,7 +1702,7 @@ sub send_ctxv_alert {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "/home/mta/Snap/.ctxvalert";
+  my $afile = "./.ctxvalert";
   if (-s $afile) {
   } else {
     open FILE, ">$afile";
@@ -1728,7 +1728,7 @@ sub send_hkp27v_alert {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "/home/mta/Snap/.hkp27valert";
+  my $afile = "./.hkp27valert";
   if (-s $afile) {
   } else {
     open FILE, ">$afile";
@@ -1753,7 +1753,7 @@ sub send_pline03t_alert {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "/home/mta/Snap/.pline03talert";
+  my $afile = "./.pline03talert";
   if (-s $afile) {
   } else {
     open FILE, ">$afile";
@@ -1778,7 +1778,7 @@ sub send_pline04t_alert {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "/home/mta/Snap/.pline04talert";
+  my $afile = "./.pline04talert";
   if (-s $afile) {
   } else {
     open FILE, ">$afile";
@@ -1803,7 +1803,7 @@ sub send_aacccdpt_yellow_alert {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "/home/mta/Snap/.aacccdptyalert";
+  my $afile = "./.aacccdptyalert";
   if (-s $afile) {
   } else {
     open FILE, ">$afile";
@@ -1828,7 +1828,7 @@ sub send_aacccdpt_red_alert {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "/home/mta/Snap/.aacccdptalert";
+  my $afile = "./.aacccdptalert";
   if (-s $afile) {
   } else {
     open FILE, ">$afile";
@@ -1853,7 +1853,7 @@ sub send_ldrtno_alert {
   if (! time_curr($obstime)) {
     return;
   }
-  my $afile = "/home/mta/Snap/.ldrtnoalert";
+  my $afile = "./.ldrtnoalert";
   if (-s $afile) {
   } else {
     open FILE, ">$afile";
