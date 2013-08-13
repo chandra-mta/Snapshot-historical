@@ -42,7 +42,7 @@ open (PIDF, "$pid_file") or die "Cannot read PID file $pid_file\n";
 while (<PIDF>) { @pinfo = split };
 
 # get the PID for the currently running acorn process (if any)
-
+#
 #@p = `/usr/ucb/ps -auxwww | grep $uid`;
 @p = `/bin/ps -auxwww | grep $uid`;
 #@a = grep /$acorn_exe.+$work_dir/, @p;
