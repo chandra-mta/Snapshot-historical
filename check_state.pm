@@ -1245,7 +1245,7 @@ sub send_107_alert {
     #print FILE "  THIS IS ONLY A TEST !!!! \n\n"; #debug
     #print FILE "(Testing ... I wasn't working before, but now I am)\n"; #debug
     print FILE "Chandra realtime telemetry shows SCS107 $_[0] at $obt UT\n\n";
-    print FILE "\nTelecon on 1-877-521-0441 111165\# now.\n";
+    print FILE "\nTelecon on 1-844-467-6272 111165\# now.\n";
     # try to figure out next comm passes
     open COMS, $comfile;
     <COMS>;
@@ -1563,7 +1563,7 @@ sub send_fmt_alert {
     open FILE, ">$afile";
     #print FILE "  THIS IS ONLY A TEST !!!! \n\n"; #debug
     print FILE "Chandra realtime telemetry shows FMT$_[0] at $obt UT\n\n";
-    print FILE "\nTelecon on 1-877-521-0441 111165\# now.\n";
+    print FILE "\nTelecon on 1-844-467-6272 111165\# now.\n";
     # try to figure out next comm passes
     open COMS, $comfile;
     my @time = split(":", $obt);
